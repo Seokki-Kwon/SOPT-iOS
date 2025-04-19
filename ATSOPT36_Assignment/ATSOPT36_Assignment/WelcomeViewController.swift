@@ -6,24 +6,75 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
-class WelcomeViewController: UIViewController {
+final class WelcomeViewController: UIViewController {
+    private let tvingImage = UIImageView().then {
+        $0.image = UIImage(resource: .tving)
+    }
+    
+    private let welcomeLabel = UILabel().then {
+        $0.font = .font(.pretendardBold, ofSize: 23)
+        $0.textColor = .gray84
+        $0.numberOfLines = 0
+        $0.text = "안녕하세요 \n 반가워요!"
+    }
+    
+    private lazy var goToMainButton = UIButton().then {
+        $0.layer.borderWidth = 1
+        $0.setTitle("메인으로", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = .font(.pretendardSemiBold, ofSize: 14)
+        $0.layer.cornerRadius = 3
+        $0.backgroundColor = .main
+        $0.addTarget(self, action: #selector(goToMainButtonTapped), for: .touchUpInside)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setUI()
+        addSubViews()
+        setLayout()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func setUI() {
+        view.backgroundColor = .black
+        // backButton 설정
+        let backButton = UIButton()
+        backButton.setImage(UIImage(resource: .backButtonIcon), for: .normal)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
-    */
-
+    
+    private func addSubViews() {
+        view.addSubview(tvingImage)
+        view.addSubview(welcomeLabel)
+        view.addSubview(goToMainButton)
+    }
+    
+    private func setLayout() {
+        tvingImage.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        welcomeLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(tvingImage.snp.bottom).offset(67)
+        }
+        
+        goToMainButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-11)
+            $0.height.equalTo(52)
+        }
+    }
+    
+    @objc private func goToMainButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
 }

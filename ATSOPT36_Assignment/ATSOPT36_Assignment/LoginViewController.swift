@@ -119,6 +119,7 @@ final class LoginViewController: UIViewController {
         setDelegates()
         addSubViews()
         setLayout()
+       
     }
     
     // MARK: - UI Setting
