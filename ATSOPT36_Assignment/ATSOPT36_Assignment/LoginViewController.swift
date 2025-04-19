@@ -26,6 +26,7 @@ final class LoginViewController: UIViewController {
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 22, height: 0))
         $0.leftViewMode = .always
         $0.layer.cornerRadius = 3
+        $0.layer.borderColor = UIColor.gray2.cgColor
     }
     
     private lazy var passwordInputView = UIStackView().then {
@@ -45,6 +46,7 @@ final class LoginViewController: UIViewController {
         $0.layer.cornerRadius = 3
         $0.rightView = passwordInputView
         $0.rightViewMode = .whileEditing
+        $0.layer.borderColor = UIColor.gray2.cgColor
     }
     
     private let deletePasswordButton = UIButton().then {
@@ -110,11 +112,17 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
+        setDelegates()
         addSubViews()
         setLayout()
     }
     
     // MARK: - UI Setting
+    
+    private func setDelegates() {
+        idTextField.delegate = self
+        pwTextField.delegate = self
+    }
     
     private func addSubViews() {
         view.addSubview(loginLabel)
@@ -160,7 +168,28 @@ final class LoginViewController: UIViewController {
             $0.top.equalTo(idPasswordView.snp.bottom).offset(28)
         }
     }
+}
+
+// MARK: - Extensions
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderWidth = 1
+    }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderWidth = 0
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if idTextField.hasText, pwTextField.hasText {
+            loginButton.backgroundColor = .main
+            loginButton.setTitleColor(.white, for: .normal)
+        } else {
+            loginButton.backgroundColor = .none
+            loginButton.setTitleColor(.gray2, for: .normal)
+        }
+    }
 }
 
 #Preview{
