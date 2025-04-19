@@ -69,6 +69,7 @@ final class LoginViewController: UIViewController {
         $0.titleLabel?.font = .font(.pretendardSemiBold, ofSize: 14)
         $0.layer.cornerRadius = 3
         $0.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        $0.isUserInteractionEnabled = false
     }
     
     private let findIdButton = UIButton().then {
@@ -204,9 +205,11 @@ extension LoginViewController: UITextFieldDelegate {
         if idTextField.hasText, pwTextField.hasText {
             loginButton.backgroundColor = .main
             loginButton.setTitleColor(.white, for: .normal)
+            loginButton.isUserInteractionEnabled = true
         } else {
             loginButton.backgroundColor = .none
             loginButton.setTitleColor(.gray2, for: .normal)
+            loginButton.isUserInteractionEnabled = false
         }
     }
 }
