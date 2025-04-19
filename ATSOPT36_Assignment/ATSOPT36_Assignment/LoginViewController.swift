@@ -60,7 +60,7 @@ final class LoginViewController: UIViewController {
         $0.addTarget(self, action: #selector(togglePasswordButtonTapped), for: .touchUpInside)
     }
     
-    private let loginButton = UIButton().then {
+    private lazy var loginButton = UIButton().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.layer.borderColor = UIColor.gray4.cgColor
         $0.layer.borderWidth = 1
@@ -68,6 +68,7 @@ final class LoginViewController: UIViewController {
         $0.setTitleColor(.gray2, for: .normal)
         $0.titleLabel?.font = .font(.pretendardSemiBold, ofSize: 14)
         $0.layer.cornerRadius = 3
+        $0.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
     }
     
     private let findIdButton = UIButton().then {
@@ -180,6 +181,10 @@ final class LoginViewController: UIViewController {
     @objc func deleteButtonTapped() {
         idTextField.text = ""
         pwTextField.text = ""
+    }
+    
+    @objc func loginButtonTapped() {
+        navigationController?.pushViewController(WelcomeViewController(), animated: true)
     }
 }
 
