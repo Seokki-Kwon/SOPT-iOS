@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4747F1F62DB3C9A800B65239 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4747F1F52DB3C9A800B65239 /* SnapKit */; };
-		4747F1F82DB3C9A800B65239 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 4747F1F72DB3C9A800B65239 /* SnapKit-Dynamic */; };
 		4747F1FB2DB3CB3100B65239 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 4747F1FA2DB3CB3100B65239 /* Then */; };
+		4747F2032DB3CCA600B65239 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4747F2022DB3CCA600B65239 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,9 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4747F1F62DB3C9A800B65239 /* SnapKit in Frameworks */,
 				4747F1FB2DB3CB3100B65239 /* Then in Frameworks */,
-				4747F1F82DB3C9A800B65239 /* SnapKit-Dynamic in Frameworks */,
+				4747F2032DB3CCA600B65239 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,9 +85,8 @@
 			);
 			name = ATSOPT36_Assignment;
 			packageProductDependencies = (
-				4747F1F52DB3C9A800B65239 /* SnapKit */,
-				4747F1F72DB3C9A800B65239 /* SnapKit-Dynamic */,
 				4747F1FA2DB3CB3100B65239 /* Then */,
+				4747F2022DB3CCA600B65239 /* SnapKit */,
 			);
 			productName = ATSOPT36_Assignment;
 			productReference = 475FC9702DAFE00C000045E9 /* ATSOPT36_Assignment.app */;
@@ -120,8 +117,8 @@
 			mainGroup = 475FC9672DAFE00C000045E9;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				4747F1F42DB3C9A800B65239 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				4747F1F92DB3CB3100B65239 /* XCRemoteSwiftPackageReference "Then" */,
+				4747F2012DB3CCA600B65239 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 475FC9712DAFE00C000045E9 /* Products */;
@@ -351,14 +348,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4747F1F42DB3C9A800B65239 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
-			};
-		};
 		4747F1F92DB3CB3100B65239 /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then";
@@ -367,23 +356,26 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		4747F2012DB3CCA600B65239 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4747F1F52DB3C9A800B65239 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4747F1F42DB3C9A800B65239 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-		4747F1F72DB3C9A800B65239 /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4747F1F42DB3C9A800B65239 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
-		};
 		4747F1FA2DB3CB3100B65239 /* Then */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4747F1F92DB3CB3100B65239 /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
+		};
+		4747F2022DB3CCA600B65239 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4747F2012DB3CCA600B65239 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
