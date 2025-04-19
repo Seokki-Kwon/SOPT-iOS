@@ -10,6 +10,8 @@ import SnapKit
 import Then
 
 final class WelcomeViewController: UIViewController {
+    private var id: String?
+    
     private let tvingImage = UIImageView().then {
         $0.image = UIImage(resource: .tving)
     }
@@ -19,6 +21,7 @@ final class WelcomeViewController: UIViewController {
         $0.textColor = .gray84
         $0.numberOfLines = 0
         $0.text = "안녕하세요 \n 반가워요!"
+        $0.textAlignment = .center
     }
     
     private lazy var goToMainButton = UIButton().then {
@@ -30,12 +33,17 @@ final class WelcomeViewController: UIViewController {
         $0.backgroundColor = .main
         $0.addTarget(self, action: #selector(goToMainButtonTapped), for: .touchUpInside)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         addSubViews()
         setLayout()
+        bindID()
+    }
+    
+    private func bindID() {
+        welcomeLabel.text = "\(id ?? "") 님\n반가워요!"
     }
     
     private func setUI() {
@@ -76,5 +84,9 @@ final class WelcomeViewController: UIViewController {
     
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func setLabelText(id: String?) {
+        self.id = id
     }
 }

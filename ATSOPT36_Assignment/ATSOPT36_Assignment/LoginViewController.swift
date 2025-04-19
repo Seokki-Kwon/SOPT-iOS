@@ -186,7 +186,9 @@ final class LoginViewController: UIViewController {
     }
     
     @objc func loginButtonTapped() {
-        navigationController?.pushViewController(WelcomeViewController(), animated: true)
+        let welcomeViewController = WelcomeViewController()
+        welcomeViewController.setLabelText(id: idTextField.text)
+        navigationController?.pushViewController(welcomeViewController, animated: true)
     }
 }
 
