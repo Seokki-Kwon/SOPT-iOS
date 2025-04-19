@@ -222,6 +222,16 @@ extension LoginViewController: UITextFieldDelegate {
             loginButton.isUserInteractionEnabled = false
         }
     }
+    
+    // 리턴키 입력시 텍스트필드 포커스 변경
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == idTextField {
+            pwTextField.becomeFirstResponder()
+        } else {
+            pwTextField.resignFirstResponder()
+        }
+        return true
+    }
 }
 
 extension LoginViewController: LoginDataDelegate {
