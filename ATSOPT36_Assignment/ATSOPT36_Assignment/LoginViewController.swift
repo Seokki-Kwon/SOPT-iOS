@@ -181,14 +181,19 @@ final class LoginViewController: UIViewController {
     }
     
     @objc func deleteButtonTapped() {
-        idTextField.text = ""
-        pwTextField.text = ""
+        clearTextField()
     }
     
     @objc func loginButtonTapped() {
         let welcomeViewController = WelcomeViewController()
         welcomeViewController.setLabelText(id: idTextField.text)
+        welcomeViewController.delegate = self
         navigationController?.pushViewController(welcomeViewController, animated: true)
+    }
+    
+    private func clearTextField() {
+        idTextField.text = ""
+        pwTextField.text = ""
     }
 }
 
@@ -213,6 +218,13 @@ extension LoginViewController: UITextFieldDelegate {
             loginButton.setTitleColor(.gray2, for: .normal)
             loginButton.isUserInteractionEnabled = false
         }
+    }
+}
+
+extension LoginViewController: LoginDataDelegate {
+    func dataBind(id: String) {
+        print("\(id) 로그아웃")
+        clearTextField()
     }
 }
 

@@ -10,6 +10,7 @@ import SnapKit
 import Then
 
 final class WelcomeViewController: UIViewController {
+    weak var delegate: LoginDataDelegate?
     private var id: String?
     
     private let tvingImage = UIImageView().then {
@@ -80,6 +81,7 @@ final class WelcomeViewController: UIViewController {
     
     @objc private func goToMainButtonTapped() {
         navigationController?.popViewController(animated: true)
+        delegate?.dataBind(id: id ?? "")
     }
     
     @objc private func backButtonTapped() {
