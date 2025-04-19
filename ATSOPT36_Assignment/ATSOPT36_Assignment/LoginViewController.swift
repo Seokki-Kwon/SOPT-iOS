@@ -47,14 +47,16 @@ final class LoginViewController: UIViewController {
         $0.rightView = passwordInputView
         $0.rightViewMode = .whileEditing
         $0.layer.borderColor = UIColor.gray2.cgColor
+        $0.isSecureTextEntry = true
     }
     
     private let deletePasswordButton = UIButton().then {
         $0.setImage(UIImage(resource: .deleteButton), for: .normal)
     }
     
-    private let togglePasswordButton = UIButton().then {
-        $0.setImage(UIImage(resource: .eyeIcon), for: .normal)
+    private lazy var togglePasswordButton = UIButton().then {
+        $0.setImage(UIImage(resource: .eyeSlashIcon), for: .normal)
+        $0.addTarget(self, action: #selector(togglePasswordButtonTapped), for: .touchUpInside)
     }
     
     private let loginButton = UIButton().then {
@@ -167,6 +169,11 @@ final class LoginViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(idPasswordView.snp.bottom).offset(28)
         }
+    }
+    
+    @objc func togglePasswordButtonTapped() {
+        pwTextField.isSecureTextEntry.toggle()
+        pwTextField.isSecureTextEntry ? togglePasswordButton.setImage(.eyeSlashIcon, for: .normal) : togglePasswordButton.setImage(.eyeIcon, for: .normal)
     }
 }
 

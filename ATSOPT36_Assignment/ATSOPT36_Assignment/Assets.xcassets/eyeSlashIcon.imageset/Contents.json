@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "eye@3x 2-1.png",
+      "filename" : "eye-slash@3x 2-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "eye@3x 2@2x.png",
+      "filename" : "eye-slash@3x 2@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "eye@3x 2.png",
+      "filename" : "eye-slash@3x 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
