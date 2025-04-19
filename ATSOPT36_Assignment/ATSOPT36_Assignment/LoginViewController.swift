@@ -120,7 +120,10 @@ final class LoginViewController: UIViewController {
         setDelegates()
         addSubViews()
         setLayout()
-       
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
     // MARK: - UI Setting
