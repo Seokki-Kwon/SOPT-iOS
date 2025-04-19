@@ -50,8 +50,9 @@ final class LoginViewController: UIViewController {
         $0.isSecureTextEntry = true
     }
     
-    private let deletePasswordButton = UIButton().then {
+    private lazy var deletePasswordButton = UIButton().then {
         $0.setImage(UIImage(resource: .deleteButton), for: .normal)
+        $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
     }
     
     private lazy var togglePasswordButton = UIButton().then {
@@ -174,6 +175,11 @@ final class LoginViewController: UIViewController {
     @objc func togglePasswordButtonTapped() {
         pwTextField.isSecureTextEntry.toggle()
         pwTextField.isSecureTextEntry ? togglePasswordButton.setImage(.eyeSlashIcon, for: .normal) : togglePasswordButton.setImage(.eyeIcon, for: .normal)
+    }
+    
+    @objc func deleteButtonTapped() {
+        idTextField.text = ""
+        pwTextField.text = ""
     }
 }
 
