@@ -19,4 +19,8 @@ extension String {
         let predicate = NSPredicate(format: "SELF MATCHES %@", regularExpression)
         return predicate.evaluate(with: self)
     }
+    
+    var isHangul: Bool {        
+        return "\(self)".range(of: "\\p{Hangul}", options: .regularExpression) != nil
+    }
 }

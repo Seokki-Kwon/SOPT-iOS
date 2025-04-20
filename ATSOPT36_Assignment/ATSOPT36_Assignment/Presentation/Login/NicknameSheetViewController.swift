@@ -41,6 +41,11 @@ final class NicknameSheetViewController: UIViewController {
         view.backgroundColor = .white
         addSubViews()
         setLayout()
+        setDelegate()
+    }
+    
+    private func setDelegate() {
+        nicknameTextField.delegate = self
     }
     
     private func addSubViews() {
@@ -70,5 +75,13 @@ final class NicknameSheetViewController: UIViewController {
     
     @objc private func saveButtonTapped() {
         
+    }
+}
+
+extension NicknameSheetViewController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let nicknameText = nicknameTextField.text else { return }
+        let filterdText = nicknameText.filter { String($0).isHangul }
+        textField.text = filterdText
     }
 }
