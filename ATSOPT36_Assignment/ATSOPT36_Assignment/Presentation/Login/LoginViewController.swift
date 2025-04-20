@@ -19,7 +19,7 @@ final class LoginViewController: UIViewController {
         $0.text = "TVING ID 로그인"
     }
     
-    private let idTextField = UITextField().then {
+    private lazy var idTextField = UITextField().then {
         $0.attributedPlaceholder = NSAttributedString(string: "아이디", attributes: [NSAttributedString.Key.foregroundColor:  UIColor.gray2, NSAttributedString.Key.font: UIFont.font(.pretendardSemiBold, ofSize: 15)])
         $0.backgroundColor = .gray4
         $0.textColor = .white
@@ -27,6 +27,10 @@ final class LoginViewController: UIViewController {
         $0.leftViewMode = .always
         $0.layer.cornerRadius = 3
         $0.layer.borderColor = UIColor.gray2.cgColor
+        // 모든 컨텐츠에 여백을주는 contentEdgeInsets 사용이 맞음
+        deleteIdButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+        $0.rightView = deleteIdButton
+        $0.rightViewMode = .never
         $0.keyboardType = .asciiCapable
     }
     
@@ -51,9 +55,15 @@ final class LoginViewController: UIViewController {
         $0.isSecureTextEntry = true
     }
     
+    private lazy var deleteIdButton = UIButton().then {
+        $0.setImage(UIImage(resource: .deleteButton), for: .normal)
+        $0.addTarget(self, action: #selector(deleteIdButtonTapped), for: .touchUpInside)
+    }
+    
     private lazy var deletePasswordButton = UIButton().then {
         $0.setImage(UIImage(resource: .deleteButton), for: .normal)
         $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        $0.isHidden = true
     }
     
     private lazy var togglePasswordButton = UIButton().then {
@@ -185,7 +195,7 @@ final class LoginViewController: UIViewController {
     }
     
     @objc func deleteButtonTapped() {
-        clearTextField()
+        pwTextField.text = ""
     }
     
     @objc func loginButtonTapped() {
@@ -193,6 +203,10 @@ final class LoginViewController: UIViewController {
         welcomeViewController.setLabelText(id: idTextField.text)
         welcomeViewController.delegate = self
         navigationController?.pushViewController(welcomeViewController, animated: true)
+    }
+    
+    @objc func deleteIdButtonTapped() {
+        idTextField.text = ""
     }
     
     private func clearTextField() {
@@ -227,6 +241,9 @@ extension LoginViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let newIdText = idTextField.text,
               let newPasswordText = pwTextField.text else { return }
+        
+        idTextField.rightViewMode = newIdText.isEmpty ? .never : .always
+        deletePasswordButton.isHidden = newPasswordText.isEmpty
         
         if newIdText.isValidEmail, newPasswordText.isValidPassword {
             enableLoginButton()
