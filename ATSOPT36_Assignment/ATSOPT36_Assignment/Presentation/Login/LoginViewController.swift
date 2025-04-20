@@ -27,6 +27,7 @@ final class LoginViewController: UIViewController {
         $0.leftViewMode = .always
         $0.layer.cornerRadius = 3
         $0.layer.borderColor = UIColor.gray2.cgColor
+        $0.keyboardType = .asciiCapable
     }
     
     private lazy var passwordInputView = UIStackView().then {
@@ -237,7 +238,7 @@ extension LoginViewController: UITextFieldDelegate {
 extension LoginViewController: LoginDataDelegate {
     func dataBind(id: String) {
         print("\(id) 로그아웃")
-        clearTextField()
+        clearTextField()        
     }
 }
 
