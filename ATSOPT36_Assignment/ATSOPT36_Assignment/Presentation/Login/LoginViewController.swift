@@ -199,6 +199,18 @@ final class LoginViewController: UIViewController {
         idTextField.text = ""
         pwTextField.text = ""
     }
+    
+    private func enableLoginButton() {
+        loginButton.backgroundColor = .main
+        loginButton.setTitleColor(.white, for: .normal)
+        loginButton.isUserInteractionEnabled = true
+    }
+    
+    private func disabledLoginButton() {
+        loginButton.backgroundColor = .none
+        loginButton.setTitleColor(.gray2, for: .normal)
+        loginButton.isUserInteractionEnabled = false
+    }
 }
 
 // MARK: - Extensions
@@ -213,14 +225,13 @@ extension LoginViewController: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        if idTextField.hasText, pwTextField.hasText {
-            loginButton.backgroundColor = .main
-            loginButton.setTitleColor(.white, for: .normal)
-            loginButton.isUserInteractionEnabled = true
+        guard let newIdText = idTextField.text,
+              let newPasswordText = pwTextField.text else { return }
+        
+        if newIdText.isValidEmail, newPasswordText.isValidPassword {
+            enableLoginButton()
         } else {
-            loginButton.backgroundColor = .none
-            loginButton.setTitleColor(.gray2, for: .normal)
-            loginButton.isUserInteractionEnabled = false
+            disabledLoginButton()
         }
     }
     
@@ -238,7 +249,7 @@ extension LoginViewController: UITextFieldDelegate {
 extension LoginViewController: LoginDataDelegate {
     func dataBind(id: String) {
         print("\(id) 로그아웃")
-        clearTextField()        
+        clearTextField()
     }
 }
 
