@@ -112,6 +112,7 @@ final class LoginViewController: UIViewController {
         $0.setTitle("닉네임 만들러가기", for: .normal)
         $0.setTitleColor(.gray2, for: .normal)
         $0.titleLabel?.font = .font(.pretendardRegular, ofSize: 14)
+        $0.setUnderline()
     }
     
     private lazy var nicknameView = UIStackView().then {
