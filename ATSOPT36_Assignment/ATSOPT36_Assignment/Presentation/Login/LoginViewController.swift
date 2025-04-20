@@ -53,6 +53,7 @@ final class LoginViewController: UIViewController {
         $0.rightViewMode = .whileEditing
         $0.layer.borderColor = UIColor.gray2.cgColor
         $0.isSecureTextEntry = true
+        $0.keyboardType = .asciiCapable
     }
     
     private lazy var deleteIdButton = UIButton().then {
@@ -238,6 +239,7 @@ extension LoginViewController: UITextFieldDelegate {
         textField.layer.borderWidth = 0
     }
     
+    // 수정이 반영된 후 텍스트
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let newIdText = idTextField.text,
               let newPasswordText = pwTextField.text else { return }
@@ -245,6 +247,14 @@ extension LoginViewController: UITextFieldDelegate {
         idTextField.rightViewMode = newIdText.isEmpty ? .never : .always
         deletePasswordButton.isHidden = newPasswordText.isEmpty
         
+        // 공백입력시 공백을 제거하고 텍스트 재설정
+        if  newIdText.contains(" ") {
+            idTextField.text  = newIdText.filter { $0 != " " }
+        } else if newPasswordText.contains(" ") {
+            pwTextField.text = newPasswordText.filter { $0 != " " }
+        }
+        
+        // 유효성 검사 후 버튼 상태변경
         if newIdText.isValidEmail, newPasswordText.isValidPassword {
             enableLoginButton()
         } else {
@@ -267,6 +277,7 @@ extension LoginViewController: LoginDataDelegate {
     func dataBind(id: String) {
         print("\(id) 로그아웃")
         clearTextField()
+        disabledLoginButton()
     }
 }
 
