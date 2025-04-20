@@ -108,10 +108,11 @@ final class LoginViewController: UIViewController {
         $0.addArrangedSubview(findPasswordButton)
     }
     
-    private let setNicknameButton = UIButton().then {
+    private lazy var setNicknameButton = UIButton().then {
         $0.setTitle("닉네임 만들러가기", for: .normal)
         $0.setTitleColor(.gray2, for: .normal)
         $0.titleLabel?.font = .font(.pretendardRegular, ofSize: 14)
+        $0.addTarget(self, action: #selector(setNicknameButtonTapped), for: .touchUpInside)
         $0.setUnderline()
     }
     
@@ -209,6 +210,20 @@ final class LoginViewController: UIViewController {
     
     @objc func deleteIdButtonTapped() {
         idTextField.text = ""
+    }
+    
+    @objc func setNicknameButtonTapped() {
+        let viewControllerToPresent = NicknameSheetViewController()
+            if let sheet = viewControllerToPresent.sheetPresentationController {
+                sheet.detents = [.custom(resolver: { _ in
+                    UIScreen.main.bounds.height / 2
+                })]
+                sheet.largestUndimmedDetentIdentifier = .medium
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+                sheet.prefersEdgeAttachedInCompactHeight = true
+                sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+            }
+            present(viewControllerToPresent, animated: true, completion: nil)
     }
     
     private func clearTextField() {
