@@ -12,7 +12,7 @@ import Then
 final class LoginViewController: UIViewController {
     
     // MARK: - Properties
-    
+    private var nickname: String?
     private let loginLabel = UILabel().then {
         $0.font = .font(.pretendardMedium, ofSize: 23)
         $0.textColor = .gray84
@@ -202,7 +202,7 @@ final class LoginViewController: UIViewController {
     
     @objc func loginButtonTapped() {
         let welcomeViewController = WelcomeViewController()
-        welcomeViewController.setLabelText(id: idTextField.text)
+        welcomeViewController.setLabelText(id: nickname ?? idTextField.text)
         welcomeViewController.delegate = self
         navigationController?.pushViewController(welcomeViewController, animated: true)
     }
@@ -212,8 +212,8 @@ final class LoginViewController: UIViewController {
     }
     
     @objc func setNicknameButtonTapped() {
-        let viewControllerToPresent = NicknameSheetViewController()
-            if let sheet = viewControllerToPresent.sheetPresentationController {
+        let nicknameSheetViewController = NicknameSheetViewController()
+            if let sheet = nicknameSheetViewController.sheetPresentationController {
                 sheet.detents = [.custom(resolver: { _ in
                     UIScreen.main.bounds.height / 2
                 })]
@@ -222,7 +222,8 @@ final class LoginViewController: UIViewController {
                 sheet.prefersEdgeAttachedInCompactHeight = true
                 sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
             }
-            present(viewControllerToPresent, animated: true, completion: nil)
+            nicknameSheetViewController.delegate = self
+            present(nicknameSheetViewController, animated: true, completion: nil)
     }
     
     private func clearTextField() {
@@ -293,6 +294,12 @@ extension LoginViewController: LoginDataDelegate {
         print("\(id) 로그아웃")
         clearTextField()
         disabledLoginButton()
+    }
+}
+
+extension LoginViewController: NicknameDelegate {
+    func dataBind(nickname: String?) {
+        self.nickname = nickname
     }
 }
 

@@ -10,7 +10,8 @@ import SnapKit
 import Then
 
 final class NicknameSheetViewController: UIViewController {
-
+    weak var delegate: NicknameDelegate?
+    
     private let nicknameInfoLabel = UILabel().then {
         $0.text = "닉네임을 입력해주세요"
         $0.font = .font(.pretendardMedium, ofSize: 23)
@@ -74,7 +75,8 @@ final class NicknameSheetViewController: UIViewController {
     }
     
     @objc private func saveButtonTapped() {
-        
+        delegate?.dataBind(nickname: nicknameTextField.text)
+        dismiss(animated: true)
     }
 }
 
@@ -83,5 +85,6 @@ extension NicknameSheetViewController: UITextFieldDelegate {
         guard let nicknameText = nicknameTextField.text else { return }
         let filterdText = nicknameText.filter { String($0).isHangul }
         textField.text = filterdText
+        saveButton.isUserInteractionEnabled = !nicknameText.isEmpty
     }
 }
