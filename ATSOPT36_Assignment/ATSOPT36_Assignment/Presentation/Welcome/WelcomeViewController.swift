@@ -10,7 +10,11 @@ import SnapKit
 import Then
 
 final class WelcomeViewController: UIViewController {
+    
+    // MARK: - Properties
+    
     weak var delegate: LoginDataDelegate?
+    
     private var id: String?
     
     private let tvingImage = UIImageView().then {
@@ -35,6 +39,8 @@ final class WelcomeViewController: UIViewController {
         $0.addTarget(self, action: #selector(goToMainButtonTapped), for: .touchUpInside)
     }
     
+    // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -42,10 +48,11 @@ final class WelcomeViewController: UIViewController {
         setLayout()
         bindID()
     }
-    
-    private func bindID() {
-        welcomeLabel.text = "\(id ?? "") 님\n반가워요!"
-    }
+}
+
+// MARK: - UI Setting
+
+extension WelcomeViewController {
     
     private func setUI() {
         view.backgroundColor = .black
@@ -78,7 +85,24 @@ final class WelcomeViewController: UIViewController {
             $0.height.equalTo(52)
         }
     }
+}
+
+// MARK: - UI Binding
+
+extension WelcomeViewController {
     
+    private func bindID() {
+        welcomeLabel.text = "\(id ?? "") 님\n반가워요!"
+    }
+    
+    func setLabelText(id: String?) {
+        self.id = id
+    }
+}
+
+// MARK: - UI Action
+
+extension WelcomeViewController {
     @objc private func goToMainButtonTapped() {
         navigationController?.popViewController(animated: true)
         delegate?.dataBind(id: id ?? "")
@@ -86,9 +110,5 @@ final class WelcomeViewController: UIViewController {
     
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
-    }
-    
-    func setLabelText(id: String?) {
-        self.id = id
     }
 }
