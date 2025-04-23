@@ -72,7 +72,7 @@ final class LoginViewController: UIViewController {
         $0.addTarget(self, action: #selector(togglePasswordButtonTapped), for: .touchUpInside)
     }
     
-    private lazy var loginButton = UIButton().then {        
+    private lazy var loginButton = UIButton().then {
         $0.layer.borderColor = UIColor.gray4.cgColor
         $0.layer.borderWidth = 1
         $0.setTitle("로그인하기", for: .normal)
@@ -191,41 +191,6 @@ final class LoginViewController: UIViewController {
         }
     }
     
-    @objc func togglePasswordButtonTapped() {
-        pwTextField.isSecureTextEntry.toggle()
-        pwTextField.isSecureTextEntry ? togglePasswordButton.setImage(.eyeSlashIcon, for: .normal) : togglePasswordButton.setImage(.eyeIcon, for: .normal)
-    }
-    
-    @objc func deleteButtonTapped() {
-        pwTextField.text = ""
-    }
-    
-    @objc func loginButtonTapped() {
-        let welcomeViewController = WelcomeViewController()
-        welcomeViewController.setLabelText(id: nickname ?? idTextField.text)
-        welcomeViewController.delegate = self
-        navigationController?.pushViewController(welcomeViewController, animated: true)
-    }
-    
-    @objc func deleteIdButtonTapped() {
-        idTextField.text = ""
-    }
-    
-    @objc func setNicknameButtonTapped() {
-        let nicknameSheetViewController = NicknameSheetViewController()
-            if let sheet = nicknameSheetViewController.sheetPresentationController {
-                sheet.detents = [.custom(resolver: { _ in
-                    UIScreen.main.bounds.height / 2
-                })]
-                sheet.largestUndimmedDetentIdentifier = .medium
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-                sheet.prefersEdgeAttachedInCompactHeight = true
-                sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
-            }
-            nicknameSheetViewController.delegate = self
-            present(nicknameSheetViewController, animated: true, completion: nil)
-    }
-    
     private func clearTextField() {
         idTextField.text = ""
         pwTextField.text = ""
@@ -244,7 +209,46 @@ final class LoginViewController: UIViewController {
     }
 }
 
-// MARK: - Extensions
+// MARK: - UI Action
+
+extension LoginViewController {
+    @objc private func togglePasswordButtonTapped() {
+        pwTextField.isSecureTextEntry.toggle()
+        pwTextField.isSecureTextEntry ? togglePasswordButton.setImage(.eyeSlashIcon, for: .normal) : togglePasswordButton.setImage(.eyeIcon, for: .normal)
+    }
+    
+    @objc private func deleteButtonTapped() {
+        pwTextField.text = ""
+    }
+    
+    @objc private func loginButtonTapped() {
+        let welcomeViewController = WelcomeViewController()
+        welcomeViewController.setLabelText(id: nickname ?? idTextField.text)
+        welcomeViewController.delegate = self
+        navigationController?.pushViewController(welcomeViewController, animated: true)
+    }
+    
+    @objc private func deleteIdButtonTapped() {
+        idTextField.text = ""
+    }
+    
+    @objc private func setNicknameButtonTapped() {
+        let nicknameSheetViewController = NicknameSheetViewController()
+        if let sheet = nicknameSheetViewController.sheetPresentationController {
+            sheet.detents = [.custom(resolver: { _ in
+                UIScreen.main.bounds.height / 2
+            })]
+            sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+        }
+        nicknameSheetViewController.delegate = self
+        present(nicknameSheetViewController, animated: true, completion: nil)
+    }
+}
+
+// MARK: - UITextFieldDelegate
 
 extension LoginViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -289,6 +293,8 @@ extension LoginViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: - LoginDataDelegate
+
 extension LoginViewController: LoginDataDelegate {
     func dataBind(id: String) {
         print("\(id) 로그아웃")
@@ -296,6 +302,8 @@ extension LoginViewController: LoginDataDelegate {
         disabledLoginButton()
     }
 }
+
+// MARK: - NicknameDelegate
 
 extension LoginViewController: NicknameDelegate {
     func dataBind(nickname: String?) {
