@@ -28,15 +28,8 @@ final class LoginViewController: UIViewController {
         $0.setPlaceholder("비밀번호", .gray2)
     }
     
-    private lazy var loginButton = UIButton().then {
-        $0.layer.borderColor = UIColor.gray4.cgColor
-        $0.layer.borderWidth = 1
-        $0.setTitle("로그인하기", for: .normal)
-        $0.setTitleColor(.gray2, for: .normal)
-        $0.titleLabel?.font = .font(.pretendardSemiBold, ofSize: 14)
-        $0.layer.cornerRadius = 3
+    private lazy var loginButton = TVButton("로그인하기").then {
         $0.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
-        $0.isUserInteractionEnabled = false
     }
     
     private let findIdButton = UIButton().then {
@@ -154,18 +147,6 @@ extension LoginViewController {
         idTextField.text = ""
         pwTextField.text = ""
     }
-    
-    private func enableLoginButton() {
-        loginButton.backgroundColor = .main
-        loginButton.setTitleColor(.white, for: .normal)
-        loginButton.isUserInteractionEnabled = true
-    }
-    
-    private func disabledLoginButton() {
-        loginButton.backgroundColor = .none
-        loginButton.setTitleColor(.gray2, for: .normal)
-        loginButton.isUserInteractionEnabled = false
-    }
 }
 
 // MARK: - UI Action
@@ -206,9 +187,9 @@ extension LoginViewController: UITextFieldDelegate {
         
         // 유효성 검사 후 버튼 상태변경
         if newIdText.isValidEmail, newPasswordText.isValidPassword {
-            enableLoginButton()
+            loginButton.isEnabled = true
         } else {
-            disabledLoginButton()
+            loginButton.isEnabled = false
         }
     }
     
@@ -229,7 +210,7 @@ extension LoginViewController: LoginDataDelegate {
     func dataBind(id: String) {
         print("\(id) 로그아웃")
         clearTextField()
-        disabledLoginButton()
+        loginButton.isEnabled = false
     }
 }
 
