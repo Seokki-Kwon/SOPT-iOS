@@ -12,64 +12,20 @@ import Then
 final class LoginViewController: UIViewController {
     
     // MARK: - Properties
+    
     private var nickname: String?
+    
     private let loginLabel = UILabel().then {
         $0.font = .font(.pretendardMedium, ofSize: 23)
         $0.textColor = .gray84
         $0.text = "TVING ID 로그인"
     }
     
-    private lazy var idTextField = UITextField().then {
-        $0.attributedPlaceholder = NSAttributedString(string: "아이디", attributes: [NSAttributedString.Key.foregroundColor:  UIColor.gray2, NSAttributedString.Key.font: UIFont.font(.pretendardSemiBold, ofSize: 15)])
-        $0.backgroundColor = .gray4
-        $0.textColor = .white
-        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 22, height: 0))
-        $0.leftViewMode = .always
-        $0.layer.cornerRadius = 3
-        $0.layer.borderColor = UIColor.gray2.cgColor
-        // 모든 컨텐츠에 여백을주는 contentEdgeInsets 사용이 맞음
-        deleteIdButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
-        $0.rightView = deleteIdButton
-        $0.rightViewMode = .never
-        $0.keyboardType = .asciiCapable
+    private let idTextField = TVTextField().then {
+        $0.setPlaceholder("아이디", .gray2)
     }
-    
-    private lazy var passwordInputView = UIStackView().then {
-        $0.spacing = 16
-        $0.isLayoutMarginsRelativeArrangement = true
-        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20)
-        $0.addArrangedSubview(deletePasswordButton)
-        $0.addArrangedSubview(togglePasswordButton)
-    }
-    
-    private lazy var pwTextField = UITextField().then {
-        $0.attributedPlaceholder = NSAttributedString(string: "비밀번호", attributes: [NSAttributedString.Key.foregroundColor:  UIColor.gray2, NSAttributedString.Key.font: UIFont.font(.pretendardSemiBold, ofSize: 15)])
-        $0.backgroundColor = .gray4
-        $0.textColor = .white
-        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 22, height: 0))
-        $0.leftViewMode = .always
-        $0.layer.cornerRadius = 3
-        $0.rightView = passwordInputView
-        $0.rightViewMode = .whileEditing
-        $0.layer.borderColor = UIColor.gray2.cgColor
-        $0.isSecureTextEntry = true
-        $0.keyboardType = .asciiCapable
-    }
-    
-    private lazy var deleteIdButton = UIButton().then {
-        $0.setImage(UIImage(resource: .deleteButton), for: .normal)
-        $0.addTarget(self, action: #selector(deleteIdButtonTapped), for: .touchUpInside)
-    }
-    
-    private lazy var deletePasswordButton = UIButton().then {
-        $0.setImage(UIImage(resource: .deleteButton), for: .normal)
-        $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-        $0.isHidden = true
-    }
-    
-    private lazy var togglePasswordButton = UIButton().then {
-        $0.setImage(UIImage(resource: .eyeSlashIcon), for: .normal)
-        $0.addTarget(self, action: #selector(togglePasswordButtonTapped), for: .touchUpInside)
+    private let pwTextField = TVTextField(.password).then {
+        $0.setPlaceholder("비밀번호", .gray2)
     }
     
     private lazy var loginButton = UIButton().then {
@@ -138,8 +94,11 @@ final class LoginViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-    
-    // MARK: - UI Setting
+}
+
+// MARK: - UI Setting
+
+extension LoginViewController {
     
     private func setDelegates() {
         idTextField.delegate = self
@@ -212,24 +171,12 @@ final class LoginViewController: UIViewController {
 // MARK: - UI Action
 
 extension LoginViewController {
-    @objc private func togglePasswordButtonTapped() {
-        pwTextField.isSecureTextEntry.toggle()
-        pwTextField.isSecureTextEntry ? togglePasswordButton.setImage(.eyeSlashIcon, for: .normal) : togglePasswordButton.setImage(.eyeIcon, for: .normal)
-    }
-    
-    @objc private func deleteButtonTapped() {
-        pwTextField.text = ""
-    }
     
     @objc private func loginButtonTapped() {
         let welcomeViewController = WelcomeViewController()
         welcomeViewController.setLabelText(id: nickname ?? idTextField.text)
         welcomeViewController.delegate = self
         navigationController?.pushViewController(welcomeViewController, animated: true)
-    }
-    
-    @objc private func deleteIdButtonTapped() {
-        idTextField.text = ""
     }
     
     @objc private func setNicknameButtonTapped() {
@@ -251,28 +198,11 @@ extension LoginViewController {
 // MARK: - UITextFieldDelegate
 
 extension LoginViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 1
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 0
-    }
     
     // 수정이 반영된 후 텍스트
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let newIdText = idTextField.text,
               let newPasswordText = pwTextField.text else { return }
-        
-        idTextField.rightViewMode = newIdText.isEmpty ? .never : .always
-        deletePasswordButton.isHidden = newPasswordText.isEmpty
-        
-        // 공백입력시 공백을 제거하고 텍스트 재설정
-        if  newIdText.contains(" ") {
-            idTextField.text  = newIdText.filter { $0 != " " }
-        } else if newPasswordText.contains(" ") {
-            pwTextField.text = newPasswordText.filter { $0 != " " }
-        }
         
         // 유효성 검사 후 버튼 상태변경
         if newIdText.isValidEmail, newPasswordText.isValidPassword {
