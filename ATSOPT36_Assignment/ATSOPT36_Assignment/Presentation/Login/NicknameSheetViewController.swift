@@ -12,6 +12,8 @@ import Then
 final class NicknameSheetViewController: UIViewController {
     weak var delegate: NicknameDelegate?
     
+    private var bottomConstraint: Constraint?
+    
     private let nicknameInfoLabel = UILabel().then {
         $0.text = "닉네임을 입력해주세요"
         $0.font = .font(.pretendardMedium, ofSize: 23)
@@ -27,15 +29,7 @@ final class NicknameSheetViewController: UIViewController {
         $0.rightViewMode = .whileEditing
     }
     
-    private lazy var saveButton = UIButton().then {
-        $0.setTitle("저장하기", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = .font(.pretendardSemiBold, ofSize: 14)
-        $0.layer.cornerRadius = 3
-        $0.backgroundColor = .main
-        $0.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        $0.isUserInteractionEnabled = false
-    }
+    private lazy var saveButton = TVButton("저장하기")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +37,12 @@ final class NicknameSheetViewController: UIViewController {
         addSubViews()
         setLayout()
         setDelegate()
+        addNotification()
+    }
+    
+    private func addNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func setDelegate() {
@@ -69,7 +69,8 @@ final class NicknameSheetViewController: UIViewController {
         
         saveButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-11)
+            // 레이아웃 설정과 동시에 할당
+            self.bottomConstraint = $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-11).constraint
             $0.height.equalTo(52)
         }
     }
@@ -78,6 +79,21 @@ final class NicknameSheetViewController: UIViewController {
         delegate?.dataBind(nickname: nicknameTextField.text)
         dismiss(animated: true)
     }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight: CGFloat
+            keyboardHeight = keyboardSize.height
+            bottomConstraint?.update(offset: -keyboardHeight)
+            self.view.layoutIfNeeded()
+        }
+        
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        bottomConstraint?.update(offset: -11)
+        self.view.layoutIfNeeded()
+    }
 }
 
 extension NicknameSheetViewController: UITextFieldDelegate {
@@ -85,6 +101,6 @@ extension NicknameSheetViewController: UITextFieldDelegate {
         guard let nicknameText = nicknameTextField.text else { return }
         let filterdText = nicknameText.filter { String($0).isHangul }
         textField.text = filterdText
-        saveButton.isUserInteractionEnabled = !nicknameText.isEmpty
+        saveButton.isEnabled = !filterdText.isEmpty
     }
 }

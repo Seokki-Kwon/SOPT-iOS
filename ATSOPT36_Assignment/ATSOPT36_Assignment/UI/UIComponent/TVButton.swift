@@ -40,10 +40,12 @@ final class TVButton: UIButton {
     private func enableLoginButton() {
         backgroundColor = .main
         setTitleColor(.white, for: .normal)
+        layer.borderWidth = 0
     }
     
     private func disabledLoginButton() {
         backgroundColor = .none
         setTitleColor(.gray2, for: .normal)
+        layer.borderWidth = 1
     }
 }

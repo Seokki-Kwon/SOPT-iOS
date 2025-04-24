@@ -161,6 +161,7 @@ extension LoginViewController {
     }
     
     @objc private func setNicknameButtonTapped() {
+        view.endEditing(true)
         let nicknameSheetViewController = NicknameSheetViewController()
         if let sheet = nicknameSheetViewController.sheetPresentationController {
             sheet.detents = [.custom(resolver: { _ in
