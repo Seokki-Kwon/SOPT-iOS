@@ -29,7 +29,9 @@ final class NicknameSheetViewController: UIViewController {
         $0.rightViewMode = .whileEditing
     }
     
-    private lazy var saveButton = TVButton("저장하기")
+    private lazy var saveButton = TVButton("저장하기").then {
+        $0.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +89,6 @@ final class NicknameSheetViewController: UIViewController {
             bottomConstraint?.update(offset: -keyboardHeight)
             self.view.layoutIfNeeded()
         }
-        
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {

@@ -102,7 +102,6 @@ extension TVTextField {
 extension TVTextField: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         deleteButton.isHidden = !hasText
-        togglePasswordButton.isHidden = !hasText
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
