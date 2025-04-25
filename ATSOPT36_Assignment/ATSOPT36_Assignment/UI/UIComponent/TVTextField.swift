@@ -42,11 +42,15 @@ final class TVTextField: UITextField {
         super.init(frame: .zero)
         setUI()
         setTextFieldStyle()
-        addTarget()
+        setDelegate()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setDelegate() {
+        self.delegate = self
     }
     
     private func setUI() {
@@ -73,14 +77,12 @@ final class TVTextField: UITextField {
         rightViewMode = .always
         rightView = rightStackView
     }
-    
-    private func addTarget() {
-        self.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
-        self.addTarget(self, action: #selector(textDidBegin), for: .editingDidBegin)
-        self.addTarget(self, action: #selector(textDidEnd), for: .editingDidEnd)
-    }
-    
-    @objc func deleteButtonTapped() {
+}
+
+// MARK: - UI Action
+
+extension TVTextField {
+    @objc private func deleteButtonTapped() {
         text = ""
         deleteButton.isHidden = true
     }
@@ -93,18 +95,22 @@ final class TVTextField: UITextField {
             togglePasswordButton.setImage(.eyeIcon, for: .normal)
         }
     }
-    
-    @objc private func textDidChange() {
+}
+
+// MARK: - UITextFieldDelegate
+
+extension TVTextField: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
         deleteButton.isHidden = !hasText
         togglePasswordButton.isHidden = !hasText
     }
     
-    @objc private func textDidBegin() {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         layer.borderWidth = 1
         deleteButton.isHidden = !hasText
     }
     
-    @objc private func textDidEnd() {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         layer.borderWidth = 0
         deleteButton.isHidden = true
     }

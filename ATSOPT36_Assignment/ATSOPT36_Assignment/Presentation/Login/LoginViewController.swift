@@ -21,11 +21,15 @@ final class LoginViewController: UIViewController {
         $0.text = "TVING ID 로그인"
     }
     
-    private let idTextField = TVTextField().then {
+    private lazy var idTextField = TVTextField().then {
         $0.setPlaceholder("아이디", .gray2)
+        $0.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        $0.addTarget(self, action: #selector(textFieldShouldReturn(sender:)), for: .editingDidEndOnExit)
     }
-    private let pwTextField = TVTextField(.password).then {
+    private lazy var pwTextField = TVTextField(.password).then {
         $0.setPlaceholder("비밀번호", .gray2)
+        $0.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        $0.addTarget(self, action: #selector(textFieldShouldReturn(sender:)), for: .editingDidEndOnExit)
     }
     
     private lazy var loginButton = TVButton("로그인하기").then {
@@ -79,7 +83,6 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        setDelegates()
         addSubViews()
         setLayout()
     }
@@ -92,11 +95,6 @@ final class LoginViewController: UIViewController {
 // MARK: - UI Setting
 
 extension LoginViewController {
-    
-    private func setDelegates() {
-        idTextField.delegate = self
-        pwTextField.delegate = self
-    }
     
     private func addSubViews() {
         view.addSubview(loginLabel)
@@ -175,14 +173,8 @@ extension LoginViewController {
         nicknameSheetViewController.delegate = self
         present(nicknameSheetViewController, animated: true, completion: nil)
     }
-}
-
-// MARK: - UITextFieldDelegate
-
-extension LoginViewController: UITextFieldDelegate {
     
-    // 수정이 반영된 후 텍스트
-    func textFieldDidChangeSelection(_ textField: UITextField) {
+    @objc private func textFieldDidChange(textField: UITextField) {
         guard let newIdText = idTextField.text,
               let newPasswordText = pwTextField.text else { return }
         
@@ -194,14 +186,12 @@ extension LoginViewController: UITextFieldDelegate {
         }
     }
     
-    // 리턴키 입력시 텍스트필드 포커스 변경
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == idTextField {
+    @objc private func textFieldShouldReturn(sender: UITextField) {
+        if sender == idTextField {
             pwTextField.becomeFirstResponder()
         } else {
             pwTextField.resignFirstResponder()
         }
-        return true
     }
 }
 
