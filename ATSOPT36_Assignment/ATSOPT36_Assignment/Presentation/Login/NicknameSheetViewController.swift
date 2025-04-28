@@ -10,6 +10,7 @@ import SnapKit
 import Then
 
 final class NicknameSheetViewController: UIViewController {
+    
     weak var delegate: NicknameDelegate?
     
     private var bottomConstraint: Constraint?

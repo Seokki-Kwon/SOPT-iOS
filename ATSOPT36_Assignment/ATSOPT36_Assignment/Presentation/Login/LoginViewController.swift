@@ -13,6 +13,8 @@ final class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
+    weak var delegate: LoginViewControllerDelegate?
+    
     private var nickname: String?
     
     private let loginLabel = UILabel().then {
@@ -195,13 +197,11 @@ extension LoginViewController {
     }
 }
 
-// MARK: - LoginDataDelegate
+// MARK: - WelcomeViewControllerDelegate
 
-extension LoginViewController: LoginDataDelegate {
-    func dataBind(id: String) {
-        print("\(id) 로그아웃")
-        clearTextField()
-        loginButton.isEnabled = false
+extension LoginViewController: WelcomeViewControllerDelegate {
+    func welcomeFlowDidComplete() {
+        delegate?.loginFlowDidComplete()
     }
 }
 

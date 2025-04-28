@@ -13,7 +13,7 @@ final class WelcomeViewController: UIViewController {
     
     // MARK: - Properties
     
-    weak var delegate: LoginDataDelegate?
+    weak var delegate: WelcomeViewControllerDelegate?
     
     private var id: String?
     
@@ -104,8 +104,7 @@ extension WelcomeViewController {
 
 extension WelcomeViewController {
     @objc private func goToMainButtonTapped() {
-        navigationController?.popViewController(animated: true)
-        delegate?.dataBind(id: id ?? "")
+        delegate?.welcomeFlowDidComplete()
     }
     
     @objc private func backButtonTapped() {
