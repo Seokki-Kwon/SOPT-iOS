@@ -51,9 +51,10 @@ final class LoginViewController: UIViewController {
     private lazy var idPasswordView = UIStackView().then {
         $0.spacing = 33
         let lineView = UIView()
-        lineView.translatesAutoresizingMaskIntoConstraints = false
-        lineView.widthAnchor.constraint(equalToConstant: 1).isActive = true
-        lineView.heightAnchor.constraint(equalToConstant: 12).isActive = true
+        lineView.snp.makeConstraints {
+            $0.width.equalTo(1)
+            $0.height.equalTo(12)
+        }        
         lineView.backgroundColor = .gray4
         $0.addArrangedSubview(findIdButton)
         $0.addArrangedSubview(lineView)
@@ -97,12 +98,9 @@ final class LoginViewController: UIViewController {
 extension LoginViewController {
     
     private func addSubViews() {
-        view.addSubview(loginLabel)
-        view.addSubview(idTextField)
-        view.addSubview(pwTextField)
-        view.addSubview(loginButton)
-        view.addSubview(idPasswordView)
-        view.addSubview(nicknameView)
+        [loginLabel, idTextField, pwTextField, loginButton, idPasswordView, nicknameView].forEach {
+            view.addSubview($0)
+        }
     }
     
     private func setLayout() {
