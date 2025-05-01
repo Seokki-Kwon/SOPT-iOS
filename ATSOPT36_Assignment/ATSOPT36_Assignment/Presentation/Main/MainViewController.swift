@@ -7,22 +7,201 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+import SnapKit
 
-    override func viewDidLoad() {
-        super.viewDidLoad()        
-        // Do any additional setup after loading the view.
+final class MainViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    private var prevTopOffset: CGFloat = 0
+    private var topConstraint: Constraint?
+    private let tableViewHeight: CGFloat = 100
+    
+    // TableView
+    private lazy var tableView = UITableView().then {
+        $0.contentInset.top = tableViewHeight
+        $0.showsVerticalScrollIndicator = false
+        $0.register(ListTableViewCell.self, forCellReuseIdentifier: ListTableViewCell.identifier)
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+        refreshControl.tintColor = .gray
+        $0.refreshControl = refreshControl
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // Tableheader
+    private let headerView = UIView().then {
+        $0.backgroundColor = .black
     }
-    */
+    
+    private let headerTopView = UIView().then {
+        let tvingLogo = UIImageView(image: UIImage(resource: .tvingLogo))
+        let tvingCharacter = UIImageView(image: UIImage(resource: .tvingLogo2))
+        let searchImage = UIImageView(image: UIImage(resource: .search))
+        
+        tvingLogo.contentMode = .left
+        tvingCharacter.contentMode = .center
+        searchImage.contentMode = .center
+        
+        // 헤더 오른쪽에 들어갈 이미지
+        let rightStackView = UIStackView()
+        rightStackView.spacing = 10
+        rightStackView.addArrangedSubview(searchImage)
+        rightStackView.addArrangedSubview(tvingCharacter)
+        
+        $0.addSubview(tvingLogo)
+        $0.addSubview(rightStackView)
+        
+        tvingLogo.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(11)
+        }
+        rightStackView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(11)
+        }
+    }
+    
+    private let menuView = UIStackView().then { stackView in
+        stackView.distribution = .equalSpacing
+        stackView.backgroundColor = .black
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 11, bottom: 0, trailing: 11)
+        ["홈", "드라마", "예능", "영화", "스포츠", "뉴스"].forEach {
+            let button = UIButton()
+            button.setTitleColor(.white, for: .normal)
+            button.setTitle($0, for: .normal)
+            button.titleLabel?.font = .font(.pretendardRegular, ofSize: 17)
+            stackView.addArrangedSubview(button)
+        }
+    }
+    
+    private let topOverlay = UIView().then {
+        $0.backgroundColor = .black
+    }
+    
+    // MARK: - LifeCylce
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addSubview()
+        setLayout()
+        setDelegate()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+    
+}
 
+// MARK: - UI Setting
+
+extension MainViewController {
+    
+    private func addSubview() {
+        [tableView, headerView, topOverlay].forEach {
+            view.addSubview($0)
+        }
+        [headerTopView, menuView].forEach {
+            headerView.addSubview($0)
+        }
+    }
+    
+    private func setLayout() {
+        
+        headerTopView.snp.makeConstraints {
+            $0.leading.trailing.top.equalToSuperview()
+            $0.height.equalTo(56)
+        }
+        
+        menuView.snp.makeConstraints {
+            $0.top.equalTo(headerTopView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+            
+        }
+        
+        topOverlay.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.top)
+        }
+        
+        headerView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            self.topConstraint = $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).constraint
+            $0.height.equalTo(tableViewHeight)
+        }
+        
+        tableView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    private func setDelegate() {
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+}
+
+// MARK: - UI Action
+
+extension MainViewController {
+    @objc private func handleRefreshControl() {
+        // Update your content…
+        
+        // Dismiss the refresh control.
+        DispatchQueue.main.async {
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension MainViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        // 상단에 여백값 음수로 값이 들어가는 문제 방지
+        if scrollView.contentOffset.y < 0 {
+            scrollView.contentOffset.y = 0
+        }
+        prevTopOffset = scrollView.contentOffset.y
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 스크롤뷰와 컨텐츠 사이의 거리
+        let currentTopOffset = scrollView.contentOffset.y
+        // 현재위치에 이전 위치를빼서 이동거리를 구한다
+        let deltaY = currentTopOffset - prevTopOffset
+        
+        if currentTopOffset > 0 {
+            // topConstraint값 가져오기
+            let oldConstraint = topConstraint?.layoutConstraints[0].constant ?? 0
+            topConstraint?.update(offset: max(-56, min(0, oldConstraint - deltaY)))
+            view.layoutIfNeeded()
+        }
+        prevTopOffset = currentTopOffset
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension MainViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 30
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
+        return cell
+    }
+}
+
+#Preview {
+    MainViewController()
 }
