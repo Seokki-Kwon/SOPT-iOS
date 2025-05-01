@@ -26,6 +26,8 @@ final class MainViewController: UIViewController {
         $0.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.identifier)
         $0.register(TodayTvingCell.self, forCellReuseIdentifier: TodayTvingCell.identifier)
         $0.register(PopularListCell.self, forCellReuseIdentifier: PopularListCell.identifier)
+        $0.register(PopularMovieListCell.self, forCellReuseIdentifier: PopularMovieListCell.identifier)
+        $0.register(BannerTableViewCell.self, forCellReuseIdentifier: BannerTableViewCell.identifier)
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
         refreshControl.tintColor = .gray
@@ -174,6 +176,10 @@ extension MainViewController: UITableViewDelegate {
             return TodayTvingCell.Metric.itemSize.height + 50
         case 2:
             return PopularListCell.Metric.itemSize.height + 50
+        case 3:
+            return PopularMovieListCell.Metric.itemSize.height + 50
+        case 4:
+            return UITableView.automaticDimension
         default:
             return 100
         }
@@ -221,7 +227,12 @@ extension MainViewController: UITableViewDataSource {
             return cell
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularListCell.identifier, for: indexPath) as? PopularListCell else { return UITableViewCell() }
-            
+            return cell
+        case 3:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularMovieListCell.identifier, for: indexPath) as? PopularMovieListCell else { return UITableViewCell() }
+            return cell
+        case 4:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: BannerTableViewCell.identifier, for: indexPath) as? BannerTableViewCell else { return UITableViewCell() }
             return cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
