@@ -19,9 +19,12 @@ final class MainViewController: UIViewController {
     
     // TableView
     private lazy var tableView = UITableView().then {
+        $0.separatorStyle = .none
         $0.contentInset.top = tableViewHeight
         $0.showsVerticalScrollIndicator = false
         $0.register(ListTableViewCell.self, forCellReuseIdentifier: ListTableViewCell.identifier)
+        $0.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.identifier)
+        $0.register(TodayTvingCell.self, forCellReuseIdentifier: TodayTvingCell.identifier)
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
         refreshControl.tintColor = .gray
@@ -91,6 +94,7 @@ final class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        tableView.contentOffset.y = -100
     }
     
 }
@@ -162,14 +166,21 @@ extension MainViewController {
 extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        switch indexPath.row {
+        case 0:
+            return UITableView.automaticDimension
+        case 1:
+            return 197
+        default:
+            return 100
+        }
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         // 상단에 여백값 음수로 값이 들어가는 문제 방지
-        if scrollView.contentOffset.y < 0 {
-            scrollView.contentOffset.y = 0
-        }
+        //        if scrollView.contentOffset.y < 0 {
+        //            scrollView.contentOffset.y = 0
+        //        }
         prevTopOffset = scrollView.contentOffset.y
     }
     
@@ -197,8 +208,18 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
-        return cell
+        
+        switch indexPath.row {
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageTableViewCell.identifier, for: indexPath) as? ImageTableViewCell else { return UITableViewCell() }
+            return cell
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TodayTvingCell.identifier, for: indexPath) as? TodayTvingCell else { return UITableViewCell() }
+            return cell
+        default:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
+            return cell
+        }
     }
 }
 
