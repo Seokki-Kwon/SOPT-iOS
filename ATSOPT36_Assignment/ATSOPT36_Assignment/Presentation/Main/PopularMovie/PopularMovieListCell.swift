@@ -100,10 +100,10 @@ extension PopularMovieListCell: UICollectionViewDelegateFlowLayout {
         if !scrollView.isDragging {
             let scrollOffset = scrollView.contentOffset.x
             let rawIndex = scrollOffset / Metric.itemSize.width
-            let indexRemain = Int(scrollOffset) % Int(Metric.itemSize.width)
-            let index = indexRemain == 0 ? CGFloat(Int(rawIndex - 1)) : CGFloat(Int(rawIndex))
-            let offsetX = (index * Metric.itemSize.width) + (index * Metric.itemMinimumSpacing)
-            targetContentOffset.pointee = CGPoint(x: offsetX , y: scrollView.contentInset.top)
+            let index: CGFloat
+            index = rawIndex - floor(rawIndex) > 0.7 ? CGFloat(Int(rawIndex + 1)) : CGFloat(Int(rawIndex))
+            let offset = (index * Metric.itemSize.width) + (index * Metric.itemMinimumSpacing)
+            targetContentOffset.pointee = CGPoint(x: offset, y: scrollView.contentInset.top)
         }
     }
 }
