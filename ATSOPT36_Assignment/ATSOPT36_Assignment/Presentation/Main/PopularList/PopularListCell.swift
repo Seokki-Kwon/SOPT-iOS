@@ -13,7 +13,7 @@ final class PopularListCell: UITableViewCell {
         static let itemSize: CGSize = CGSize(width: 160, height: 140)
         static let itemMinimumSpacing: CGFloat = 7
         static let itemMinimumInterSpacing: CGFloat = 0
-        static let sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        static let sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     }
     
     // MARK: - Properties

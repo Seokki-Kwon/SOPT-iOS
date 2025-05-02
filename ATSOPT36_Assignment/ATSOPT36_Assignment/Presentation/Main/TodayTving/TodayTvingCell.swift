@@ -15,6 +15,7 @@ final class TodayTvingCell: UITableViewCell {
         static let itemSize: CGSize = CGSize(width: 150, height: 146)
         static let itemMinimumSpacing: CGFloat = 11.0
         static let itemMinimumInterSpacing: CGFloat = 11.0
+        static let sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
     }
     
     // MARK: - Properties
@@ -31,6 +32,7 @@ final class TodayTvingCell: UITableViewCell {
         $0.minimumLineSpacing = Metric.itemMinimumSpacing
         $0.minimumInteritemSpacing = Metric.itemMinimumInterSpacing
         $0.itemSize = Metric.itemSize
+        $0.sectionInset = Metric.sectionInset
     }
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout).then {

@@ -90,11 +90,11 @@ final class MainViewController: UIViewController {
 
         tvingLogo.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(11)
+            $0.leading.equalToSuperview().inset(16)
         }
         rightStackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(11)
+            $0.trailing.equalToSuperview().inset(16)
         }
     }
 
@@ -198,17 +198,17 @@ extension MainViewController: UITableViewDelegate {
         case 0:
             return UITableView.automaticDimension
         case 1:
-            return TodayTvingCell.Metric.itemSize.height + 50
+            return TodayTvingCell.Metric.itemSize.height + 60
         case 2:
-            return PopularListCell.Metric.itemSize.height + 50
+            return PopularListCell.Metric.itemSize.height + 60
         case 3:
-            return PopularMovieListCell.Metric.itemSize.height + 50
+            return PopularMovieListCell.Metric.itemSize.height + 60
         case 4:
             return UITableView.automaticDimension
         case 5:
             return SportListCell.Metric.itemSize.height
         case 6:
-            return KimGahyunBestListCell.Metric.itemSize.height + 50
+            return KimGahyunBestListCell.Metric.itemSize.height + 60
         default:
             return 100
         }

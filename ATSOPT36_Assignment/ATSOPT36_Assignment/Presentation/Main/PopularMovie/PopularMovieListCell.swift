@@ -13,7 +13,7 @@ final class PopularMovieListCell: UITableViewCell {
         static let itemSize: CGSize = CGSize(width: 98, height: 146)
         static let itemMinimumSpacing: CGFloat = 8
         static let itemMinimumInterSpacing: CGFloat = 0
-        static let sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        static let sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     }
     
     // MARK: - Properties

@@ -38,8 +38,7 @@ final class TodayTvingCollectionCell: UICollectionViewCell {
         }
         
         rankingLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(10)
+            $0.leading.bottom.equalToSuperview()
         }
         imageView.snp.makeConstraints {
             $0.leading.equalTo(rankingLabel.snp.trailing).offset(10)

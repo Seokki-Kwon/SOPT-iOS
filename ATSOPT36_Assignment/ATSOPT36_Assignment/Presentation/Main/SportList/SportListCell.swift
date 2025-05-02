@@ -13,7 +13,7 @@ final class SportListCell: UITableViewCell {
         static let itemSize: CGSize = CGSize(width: 90, height: 45)
         static let itemMinimumSpacing: CGFloat = 7
         static let itemMinimumInterSpacing: CGFloat = 0
-        static let sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        static let sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     }
     
     // MARK: - Properties

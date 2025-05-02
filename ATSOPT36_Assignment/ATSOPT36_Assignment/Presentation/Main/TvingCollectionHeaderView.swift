@@ -31,8 +31,8 @@ final class TvingCollectionHeaderView: UIView {
         backgroundColor = .black
         
         titleLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(10)
+            $0.leading.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(5)
         }
     }
     
