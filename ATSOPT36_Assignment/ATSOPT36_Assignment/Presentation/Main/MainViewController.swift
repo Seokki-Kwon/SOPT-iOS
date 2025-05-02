@@ -29,6 +29,7 @@ final class MainViewController: UIViewController {
         $0.register(PopularMovieListCell.self, forCellReuseIdentifier: PopularMovieListCell.identifier)
         $0.register(BannerTableViewCell.self, forCellReuseIdentifier: BannerTableViewCell.identifier)
         $0.register(SportListCell.self, forCellReuseIdentifier: SportListCell.identifier)
+        $0.register(KimGahyunBestListCell.self, forCellReuseIdentifier: KimGahyunBestListCell.identifier)
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
         refreshControl.tintColor = .gray
@@ -183,6 +184,8 @@ extension MainViewController: UITableViewDelegate {
             return UITableView.automaticDimension
         case 5:
             return SportListCell.Metric.itemSize.height
+        case 6:
+            return KimGahyunBestListCell.Metric.itemSize.height + 50
         default:
             return 100
         }
@@ -216,7 +219,7 @@ extension MainViewController: UITableViewDelegate {
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+        return 7
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -240,9 +243,11 @@ extension MainViewController: UITableViewDataSource {
         case 5:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SportListCell.identifier, for: indexPath) as? SportListCell else { return UITableViewCell() }
             return cell
-        default:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
+        case 6:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: KimGahyunBestListCell.identifier, for: indexPath) as? KimGahyunBestListCell else { return UITableViewCell() }
             return cell
+        default:
+            return UITableViewCell()
         }
     }
 }
