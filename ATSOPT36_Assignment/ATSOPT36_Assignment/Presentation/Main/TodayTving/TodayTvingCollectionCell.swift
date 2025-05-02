@@ -47,3 +47,10 @@ final class TodayTvingCollectionCell: UICollectionViewCell {
         
     }
 }
+
+extension TodayTvingCollectionCell {
+    func dataBind(index: Int, _ item: ContentModel) {
+        imageView.image = item.thumbnail        
+        rankingLabel.image = UIImage(named: "number\(index + 1)")
+    }
+}

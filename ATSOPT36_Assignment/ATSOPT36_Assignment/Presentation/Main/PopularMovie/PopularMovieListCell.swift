@@ -17,6 +17,7 @@ final class PopularMovieListCell: UITableViewCell {
     }
     
     // MARK: - Properties
+    private var items: [ContentModel] = []
     
     static let identifier = "PopularMovieListCell"
     
@@ -72,6 +73,10 @@ final class PopularMovieListCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
+    
+    func prepare(items: [ContentModel]) {
+        self.items = items
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -83,6 +88,7 @@ extension PopularMovieListCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularMovieCell.identifier, for: indexPath) as? PopularMovieCell else { return UICollectionViewCell() }
+        cell.dataBind(item: items[indexPath.row])
         return cell
     }
 }

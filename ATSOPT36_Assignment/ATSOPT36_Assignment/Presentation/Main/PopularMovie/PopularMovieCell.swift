@@ -41,3 +41,8 @@ final class PopularMovieCell: UICollectionViewCell {
     }
 }
 
+extension PopularMovieCell {
+    func dataBind(item: ContentModel) {
+        imageView.image = item.thumbnail        
+    }
+}

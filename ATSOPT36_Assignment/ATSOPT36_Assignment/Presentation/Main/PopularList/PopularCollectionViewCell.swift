@@ -95,3 +95,11 @@ final class PopularCollectionViewCell: UICollectionViewCell {
     }
 }
 
+extension PopularCollectionViewCell {
+    func dataBind(item: ContentModel) {
+        imageView.image = item.thumbnail
+        titleLabel.text = item.title
+        detailInfoLabel.text = item.description
+        latingLabel.text = "\(item.rating)%"
+    }
+}

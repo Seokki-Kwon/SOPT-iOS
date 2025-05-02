@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 final class TodayTvingCell: UITableViewCell {
-    
+  
     enum Metric {
         static let itemSize: CGSize = CGSize(width: 150, height: 146)
         static let itemMinimumSpacing: CGFloat = 11.0
@@ -19,6 +19,7 @@ final class TodayTvingCell: UITableViewCell {
     }
     
     // MARK: - Properties
+    private var items: [ContentModel] = []
     
     static let identifier = "TodayTvingCell"
     
@@ -74,17 +75,22 @@ final class TodayTvingCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
+    
+    func prepare(items: [ContentModel]) {
+        self.items = items
+    }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension TodayTvingCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TodayTvingCollectionCell.identifier, for: indexPath) as? TodayTvingCollectionCell else { return UICollectionViewCell() }
+        cell.dataBind(index: indexPath.row, items[indexPath.row])
         return cell
     }
 }
@@ -100,3 +106,4 @@ extension TodayTvingCell: UICollectionViewDelegateFlowLayout {
         }
     }
 }
+

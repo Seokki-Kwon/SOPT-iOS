@@ -17,7 +17,7 @@ final class PopularListCell: UITableViewCell {
     }
     
     // MARK: - Properties
-    
+    private var items: [ContentModel] = []
     static let identifier = "PopularListCell"
     
     private let collectionViewHeader = TvingCollectionHeaderView().then {
@@ -72,17 +72,22 @@ final class PopularListCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
+    
+    func prepare(items: [ContentModel]) {
+        self.items = items
+    }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension PopularListCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as? PopularCollectionViewCell else { return UICollectionViewCell() }
+        cell.dataBind(item: items[indexPath.row])
         return cell
     }
 }
