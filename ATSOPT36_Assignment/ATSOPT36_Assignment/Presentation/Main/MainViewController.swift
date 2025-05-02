@@ -18,6 +18,7 @@ final class MainViewController: UIViewController {
         $0.separatorStyle = .none
         $0.contentInset.top = tableViewHeight
         $0.showsVerticalScrollIndicator = false
+        
         $0.register(ListTableViewCell.self, forCellReuseIdentifier: ListTableViewCell.identifier)
         $0.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.identifier)
         $0.register(TodayTvingCell.self, forCellReuseIdentifier: TodayTvingCell.identifier)
@@ -39,6 +40,9 @@ final class MainViewController: UIViewController {
     ).then {
         $0.backgroundColor = .black
         $0.addSubview(accountInfoView)
+        $0.addSubview(termOfServiceLabel)
+        $0.addSubview(privacyPolicyLabel)
+        $0.addSubview(businessInfoLabel)
     }
     
     private let accountInfoView = UIStackView().then {
@@ -65,6 +69,22 @@ final class MainViewController: UIViewController {
         $0.addArrangedSubview(notiLabel)
         $0.addArrangedSubview(accountLabel)
         $0.addArrangedSubview(moveButton)
+    }
+    
+    private let termOfServiceLabel = UILabel().then {
+        $0.text = "고객문의 · 이용약관 · "
+        $0.font = .font(.pretendardMedium, ofSize: 11)
+        $0.textColor = .gray2
+    }
+    private let privacyPolicyLabel = UILabel().then {
+        $0.text = "개인정보처리방침"
+        $0.font = .font(.pretendardMedium, ofSize: 11)
+        $0.textColor = .white
+    }
+    private let businessInfoLabel = UILabel().then {
+        $0.text = "사업자정보 · 인재채용"
+        $0.font = .font(.pretendardMedium, ofSize: 11)
+        $0.textColor = .gray2
     }
     
     private let headerView = UIView().then {
@@ -171,6 +191,21 @@ extension MainViewController {
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.top.equalToSuperview().offset(23)
         }
+        
+        termOfServiceLabel.snp.makeConstraints {
+            $0.top.equalTo(accountInfoView.snp.bottom).offset(13)
+            $0.leading.equalToSuperview().offset(20)
+        }
+        
+        privacyPolicyLabel.snp.makeConstraints {
+            $0.top.equalTo(accountInfoView.snp.bottom).offset(13)
+            $0.leading.equalTo(termOfServiceLabel.snp.trailing)
+        }
+        
+        businessInfoLabel.snp.makeConstraints {
+            $0.top.equalTo(termOfServiceLabel.snp.bottom).offset(5)
+            $0.leading.equalToSuperview().offset(20)
+        }
     }
     
     private func setDelegate() {
@@ -239,7 +274,6 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return mockData.count
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch mockData[indexPath.row] {
