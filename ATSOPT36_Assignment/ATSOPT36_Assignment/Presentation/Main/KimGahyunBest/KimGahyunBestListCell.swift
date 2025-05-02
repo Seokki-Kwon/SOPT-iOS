@@ -17,6 +17,7 @@ final class KimGahyunBestListCell: UITableViewCell {
     }
     
     // MARK: - Properties
+    private var items: [ContentModel] = []
     
     static let identifier = "KimGahyunBestListCell"
     
@@ -72,17 +73,22 @@ final class KimGahyunBestListCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
+    
+    func prepare(items: [ContentModel]) {
+        self.items = items
+    }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension KimGahyunBestListCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KimGahyunBestCell.identifier, for: indexPath) as? KimGahyunBestCell else { return UICollectionViewCell() }
+        cell.dataBind(item: items[indexPath.row])
         return cell
     }
 }

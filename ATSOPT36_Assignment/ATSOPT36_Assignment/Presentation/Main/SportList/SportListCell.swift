@@ -17,6 +17,7 @@ final class SportListCell: UITableViewCell {
     }
     
     // MARK: - Properties
+    private var items: [ContentModel] = []
     
     static let identifier = "SportListCell"
     
@@ -38,7 +39,7 @@ final class SportListCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
-        setDelegate()
+        setDelegate()        
     }
     
     required init?(coder: NSCoder) {
@@ -61,17 +62,22 @@ final class SportListCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
+    
+    func prepare(items: [ContentModel]) {
+        self.items = items
+    }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension SportListCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SportCell.identifier, for: indexPath) as? SportCell else { return UICollectionViewCell() }
+        cell.dataBind(item: items[indexPath.row])
         return cell
     }
 }

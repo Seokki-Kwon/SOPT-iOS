@@ -42,7 +42,7 @@ final class MainViewController: UIViewController {
     }
     
     private let accountInfoView = UIStackView().then {
-        $0.backgroundColor = .footer
+        $0.backgroundColor = .gray5
         $0.layer.cornerRadius = 5
         $0.isLayoutMarginsRelativeArrangement = true
         $0.distribution = .fillProportionally
@@ -263,9 +263,11 @@ extension MainViewController: UITableViewDataSource {
             return cell
         case let .sport(items):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SportListCell.identifier, for: indexPath) as? SportListCell else { return UITableViewCell() }
+            cell.prepare(items: items)
             return cell
         case let .kimGahyunBest(items):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: KimGahyunBestListCell.identifier, for: indexPath) as? KimGahyunBestListCell else { return UITableViewCell() }
+            cell.prepare(items: items)
             return cell
         }
     }

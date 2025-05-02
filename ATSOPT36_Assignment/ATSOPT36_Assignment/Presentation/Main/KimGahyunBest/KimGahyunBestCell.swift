@@ -44,3 +44,8 @@ final class KimGahyunBestCell: UICollectionViewCell {
     }
 }
 
+extension KimGahyunBestCell {
+    func dataBind(item: ContentModel) {
+        imageView.image = item.thumbnail
+    }
+}

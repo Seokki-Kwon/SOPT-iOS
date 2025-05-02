@@ -49,36 +49,11 @@ extension MockData {
             .init(title: "UCL 2024-25", description: "유럽 챔피언스리그 하이라이트와 생중계", rating: 9.4, thumbnail: UIImage(resource: .sport4)),
         ]),
         .kimGahyunBest([
-            .init(title: "눈물의 여왕", description: "재벌가 부부의 위기와 사랑을 그린 감성 드라마", rating: 9.5, thumbnail: UIImage()),
-            .init(title: "이두나!", description: "아이돌과 대학생의 특별한 동거 이야기", rating: 8.6, thumbnail: UIImage()),
-            .init(title: "무빙", description: "초능력을 지닌 가족들의 비밀스러운 이야기", rating: 9.2, thumbnail: UIImage()),
-            .init(title: "무빙", description: "초능력을 지닌 가족들의 비밀스러운 이야기", rating: 9.2, thumbnail: UIImage()),
-            .init(title: "무빙", description: "초능력을 지닌 가족들의 비밀스러운 이야기", rating: 9.2, thumbnail: UIImage()),
+            .init(title: "눈물의 여왕", description: "재벌가 부부의 위기와 사랑을 그린 감성 드라마", rating: 9.5, thumbnail: UIImage(resource: .kimgahyun1)),
+            .init(title: "이두나!", description: "아이돌과 대학생의 특별한 동거 이야기", rating: 8.6, thumbnail: UIImage(resource: .kimgahyun2)),
+            .init(title: "무빙", description: "초능력을 지닌 가족들의 비밀스러운 이야기", rating: 9.2, thumbnail: UIImage(resource: .kimgahyun3)),
+            .init(title: "무빙", description: "초능력을 지닌 가족들의 비밀스러운 이야기", rating: 9.2, thumbnail: UIImage(resource: .kimgahyun4)),
+            .init(title: "무빙", description: "초능력을 지닌 가족들의 비밀스러운 이야기", rating: 9.2, thumbnail: UIImage(resource: .kimgahyun5)),
         ])
-    ]
-
+    ]   
 }
-
-//struct MockData {
-//    let todayTving: [ContentModel]
-//    let popular: [ContentModel]
-//    let live: [ContentModel]
-//    let popularMovie: [ContentModel]
-//    let sport: [ContentModel]
-//    let kimGaHyunBest: [ContentModel]
-//}
-//
-//extension MockData {
-//    static let mock: Self = .init(todayTving: [
-//        .init(title: "", description: "", rating: 10.0, thumbnail: UIImage(resource: .movie1)),
-//        .init(title: "", description: "", rating: 9.0, thumbnail: UIImage(resource: .movie2)),
-//        .init(title: "", description: "", rating: 8.0, thumbnail: UIImage(resource: .movie3)),
-//        .init(title: "", description: "", rating: 7.0, thumbnail: UIImage(resource: .movie4)),
-//        .init(title: "", description: "", rating: 6.0, thumbnail: UIImage(resource: .movie5))
-//    ],
-//                                  popular: [],
-//                                  live: [],
-//                                  popularMovie: [],
-//                                  sport: [],
-//                                  kimGaHyunBest: [])
-//}

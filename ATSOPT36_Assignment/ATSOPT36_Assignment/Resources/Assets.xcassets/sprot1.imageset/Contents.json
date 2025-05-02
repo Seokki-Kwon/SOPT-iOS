@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "sprot1.png",
+      "filename" : "image 109.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "image 87@2x.png",
+      "filename" : "image 109@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "image 87@3x.png",
+      "filename" : "image 109@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
