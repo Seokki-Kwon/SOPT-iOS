@@ -6,17 +6,18 @@
 //
 
 import UIKit
+
 import SnapKit
 
-final class MainViewController: UIViewController {
+final class MainViewController: BaseViewController {
     
     // MARK: - Properties
     
     private let mockData = MockData.items
+    private let tableViewHeight: CGFloat = 100
     
     private var prevTopOffset: CGFloat = 0
     private var topConstraint: Constraint?
-    private let tableViewHeight: CGFloat = 100
     
     private lazy var tableView = UITableView().then {
         $0.separatorStyle = .none
@@ -140,35 +141,9 @@ final class MainViewController: UIViewController {
     private let topOverlay = UIView().then {
         $0.backgroundColor = .black
     }
-}
-
-// MARK: - LifeCycle
-
-extension MainViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        addSubview()
-        setLayout()
-        setDelegate()
-    }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-        tableView.contentOffset.y = -100
-    }
-}
-
-// MARK: - UI Setting
-
-extension MainViewController {
-    
-    private func addSubview() {
-        [tableView, headerView, topOverlay].forEach { view.addSubview($0) }
-        [headerTopView, menuView].forEach { headerView.addSubview($0) }
-    }
-    
-    private func setLayout() {
+    // MARK: - UI Setting
+    override func setLayout() {
         headerTopView.snp.makeConstraints {
             $0.leading.trailing.top.equalToSuperview()
             $0.height.equalTo(56)
@@ -216,11 +191,27 @@ extension MainViewController {
         }
     }
     
-    private func setDelegate() {
+    override func setDelegate() {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    override func addSubview() {
+        [tableView, headerView, topOverlay].forEach { view.addSubview($0) }
+        [headerTopView, menuView].forEach { headerView.addSubview($0) }
+    }
 }
+
+// MARK: - LifeCycle
+
+extension MainViewController {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+        tableView.contentOffset.y = -100
+    }
+}
+
 
 // MARK: - UI Action
 

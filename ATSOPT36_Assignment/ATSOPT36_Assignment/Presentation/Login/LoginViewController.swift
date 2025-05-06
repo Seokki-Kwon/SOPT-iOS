@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class LoginViewController: UIViewController {
+final class LoginViewController: BaseViewController {
     
     // MARK: - Properties
     
@@ -82,23 +82,13 @@ final class LoginViewController: UIViewController {
     
     // MARK: - LifeCycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .black
-        addSubViews()
-        setLayout()
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-}
-
-// MARK: - UI Setting
-
-extension LoginViewController {
+ 
+    // MARK: - UI Setting
     
-    private func addSubViews() {
+    override func addSubview() {
         view.addSubview(loginLabel)
         view.addSubview(idTextField)
         view.addSubview(pwTextField)
@@ -107,7 +97,7 @@ extension LoginViewController {
         view.addSubview(nicknameView)
     }
     
-    private func setLayout() {
+    override func setLayout() {
         
         loginLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -141,11 +131,6 @@ extension LoginViewController {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(idPasswordView.snp.bottom).offset(28)
         }
-    }
-    
-    private func clearTextField() {
-        idTextField.text = ""
-        pwTextField.text = ""
     }
 }
 
@@ -194,6 +179,11 @@ extension LoginViewController {
         } else {
             pwTextField.resignFirstResponder()
         }
+    }
+    
+    private func clearTextField() {
+        idTextField.text = ""
+        pwTextField.text = ""
     }
 }
 
