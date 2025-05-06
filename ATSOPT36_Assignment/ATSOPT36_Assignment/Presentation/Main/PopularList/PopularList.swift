@@ -1,5 +1,5 @@
 //
-//  PopularMovieListCell.swift
+//  PopularListCell.swift
 //  ATSOPT36_Assignment
 //
 //  Created by 권석기 on 5/2/25.
@@ -7,22 +7,21 @@
 
 import UIKit
 
-final class PopularMovieListCell: UITableViewCell {
+final class PopularList: UITableViewCell {
     
     enum Metric {
-        static let itemSize: CGSize = CGSize(width: 98, height: 146)
-        static let itemMinimumSpacing: CGFloat = 8
+        static let itemSize: CGSize = CGSize(width: 160, height: 140)
+        static let itemMinimumSpacing: CGFloat = 7
         static let itemMinimumInterSpacing: CGFloat = 0
         static let sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     }
     
     // MARK: - Properties
     private var items: [ContentModel] = []
-    
-    static let identifier = "PopularMovieListCell"
+    static let identifier = "PopularList"
     
     private let collectionViewHeader = TvingCollectionHeaderView().then {
-        $0.configure(title: "실시간 인기 영화")
+        $0.configure(title: "실시간 인기 LIVE")
         $0.backgroundColor = .black
     }
     
@@ -36,7 +35,7 @@ final class PopularMovieListCell: UITableViewCell {
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout).then {
         $0.showsHorizontalScrollIndicator = false
-        $0.register(PopularMovieCell.self, forCellWithReuseIdentifier: PopularMovieCell.identifier)
+        $0.register(PopularListCell.self, forCellWithReuseIdentifier: PopularListCell.identifier)
     }
     
     // MARK: - Initializer
@@ -81,13 +80,13 @@ final class PopularMovieListCell: UITableViewCell {
 
 // MARK: - UICollectionViewDataSource
 
-extension PopularMovieListCell: UICollectionViewDataSource {
+extension PopularList: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularMovieCell.identifier, for: indexPath) as? PopularMovieCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularListCell.identifier, for: indexPath) as? PopularListCell else { return UICollectionViewCell() }
         cell.dataBind(item: items[indexPath.row])
         return cell
     }
@@ -95,7 +94,7 @@ extension PopularMovieListCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension PopularMovieListCell: UICollectionViewDelegateFlowLayout {
+extension PopularList: UICollectionViewDelegateFlowLayout {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if !scrollView.isDragging {
             let scrollOffset = scrollView.contentOffset.x

@@ -1,25 +1,32 @@
 //
-//  SportListCell.swift
+//  TodayTvingCell.swift
 //  ATSOPT36_Assignment
 //
-//  Created by 권석기 on 5/2/25.
+//  Created by 권석기 on 5/1/25.
 //
 
 import UIKit
 
-final class SportListCell: UITableViewCell {
-    
+import SnapKit
+
+final class TodayTvingList: UITableViewCell {
+  
     enum Metric {
-        static let itemSize: CGSize = CGSize(width: 90, height: 45)
-        static let itemMinimumSpacing: CGFloat = 7
-        static let itemMinimumInterSpacing: CGFloat = 0
-        static let sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        static let itemSize: CGSize = CGSize(width: 150, height: 146)
+        static let itemMinimumSpacing: CGFloat = 11.0
+        static let itemMinimumInterSpacing: CGFloat = 11.0
+        static let sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
     }
     
     // MARK: - Properties
     private var items: [ContentModel] = []
     
-    static let identifier = "SportListCell"
+    static let identifier = "TodayTvingList"
+    
+    private let collectionViewHeader = TvingCollectionHeaderView().then {
+        $0.configure(title: "오늘의 티빙 TOP 20")
+        $0.backgroundColor = .black
+    }
     
     private lazy var collectionViewLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -31,7 +38,7 @@ final class SportListCell: UITableViewCell {
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout).then {
         $0.showsHorizontalScrollIndicator = false
-        $0.register(SportCell.self, forCellWithReuseIdentifier: SportCell.identifier)
+        $0.register(TodayTvingCell.self, forCellWithReuseIdentifier: TodayTvingCell.identifier)
     }
     
     // MARK: - Initializer
@@ -39,7 +46,7 @@ final class SportListCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
-        setDelegate()        
+        setDelegate()
     }
     
     required init?(coder: NSCoder) {
@@ -49,12 +56,18 @@ final class SportListCell: UITableViewCell {
     // MARK: - UI Setting
     
     private func setUI() {
-        [collectionView].forEach {
+        [collectionViewHeader, collectionView].forEach {
             contentView.addSubview($0)
         }
         
+        collectionViewHeader.snp.makeConstraints {
+            $0.leading.trailing.top.equalToSuperview()
+            $0.height.equalTo(50)
+        }
+        
         collectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalTo(collectionViewHeader.snp.bottom)
         }
     }
     
@@ -70,21 +83,19 @@ final class SportListCell: UITableViewCell {
 
 // MARK: - UICollectionViewDataSource
 
-extension SportListCell: UICollectionViewDataSource {
+extension TodayTvingList: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SportCell.identifier, for: indexPath) as? SportCell else { return UICollectionViewCell() }
-        cell.dataBind(item: items[indexPath.row])
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TodayTvingCell.identifier, for: indexPath) as? TodayTvingCell else { return UICollectionViewCell() }
+        cell.dataBind(index: indexPath.row, items[indexPath.row])
         return cell
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension SportListCell: UICollectionViewDelegateFlowLayout {
+extension TodayTvingList: UICollectionViewDelegateFlowLayout {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if !scrollView.isDragging {
             let scrollOffset = scrollView.contentOffset.x
@@ -96,3 +107,4 @@ extension SportListCell: UICollectionViewDelegateFlowLayout {
         }
     }
 }
+

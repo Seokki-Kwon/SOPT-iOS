@@ -9,9 +9,9 @@ import UIKit
 
 import SnapKit
 
-final class SportCell: UICollectionViewCell {
+final class SportChannelCell: UICollectionViewCell {
     
-    static let identifier = "SportCell"
+    static let identifier = "SportChannelCell"
     
     private let imageView = UIImageView().then {
         $0.clipsToBounds = true
@@ -45,7 +45,7 @@ final class SportCell: UICollectionViewCell {
     }
 }
 
-extension SportCell {
+extension SportChannelCell {
     func dataBind(item: ContentModel) {
         imageView.image = item.thumbnail        
     }

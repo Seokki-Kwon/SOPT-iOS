@@ -1,5 +1,5 @@
 //
-//  PopularListCell.swift
+//  PopularCollectionViewCell.swift
 //  ATSOPT36_Assignment
 //
 //  Created by 권석기 on 5/2/25.
@@ -7,102 +7,99 @@
 
 import UIKit
 
-final class PopularListCell: UITableViewCell {
+import SnapKit
+
+final class PopularListCell: UICollectionViewCell {
     
-    enum Metric {
-        static let itemSize: CGSize = CGSize(width: 160, height: 140)
-        static let itemMinimumSpacing: CGFloat = 7
-        static let itemMinimumInterSpacing: CGFloat = 0
-        static let sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
-    }
-    
-    // MARK: - Properties
-    private var items: [ContentModel] = []
     static let identifier = "PopularListCell"
     
-    private let collectionViewHeader = TvingCollectionHeaderView().then {
-        $0.configure(title: "실시간 인기 LIVE")
-        $0.backgroundColor = .black
+    private let imageView = UIImageView().then {
+        $0.layer.cornerRadius = 3
+        $0.clipsToBounds = true
+        $0.image = UIImage(resource: .poupluar1)
+        $0.backgroundColor = .yellow
     }
     
-    private lazy var collectionViewLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .horizontal
-        $0.minimumLineSpacing = Metric.itemMinimumSpacing
-        $0.minimumInteritemSpacing = Metric.itemMinimumInterSpacing
-        $0.itemSize = Metric.itemSize
-        $0.sectionInset = Metric.sectionInset
+    private let rankLabel = UIImageView().then {
+        $0.image = UIImage(resource: .number1)
     }
     
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout).then {
-        $0.showsHorizontalScrollIndicator = false
-        $0.register(PopularCollectionViewCell.self, forCellWithReuseIdentifier: PopularCollectionViewCell.identifier)
+    private let titleLabel = UILabel().then {
+        $0.text = "JTBC"
+        $0.font = .font(.pretendardMedium, ofSize: 10)
+        $0.textColor = .white
     }
     
-    // MARK: - Initializer
+    private let detailInfoLabel = UILabel().then {
+        $0.text = "이혼숙려캠프 34화"
+        $0.font = .font(.pretendardMedium, ofSize: 10)
+        $0.textColor = .gray
+    }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setUI()
-        setDelegate()
+    private let latingLabel = UILabel().then {
+        $0.text = "27.2%"
+        $0.font = .font(.pretendardMedium, ofSize: 10)
+        $0.textColor = .gray
+    }
+    
+    private lazy var infoDetailView = UIStackView().then {
+        $0.axis = .vertical
+        $0.distribution = .equalSpacing
+        $0.addArrangedSubview(titleLabel)
+        $0.addArrangedSubview(detailInfoLabel)
+        $0.addArrangedSubview(latingLabel)
+    }
+    
+    private let infoView = UIView()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubView()
+        setLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI Setting
-    
-    private func setUI() {
-        [collectionViewHeader, collectionView].forEach {
+    private func addSubView() {
+        [rankLabel, infoDetailView].forEach {
+            infoView.addSubview($0)
+        }
+        [imageView, infoView].forEach {
             contentView.addSubview($0)
         }
-        
-        collectionViewHeader.snp.makeConstraints {
-            $0.leading.trailing.top.equalToSuperview()
-            $0.height.equalTo(50)
+    }
+    
+    private func setLayout() {        
+        rankLabel.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().offset(9)
+            $0.width.equalTo(12)
+            $0.height.equalTo(18)
+        }
+        infoDetailView.snp.makeConstraints {
+            $0.leading.equalTo(rankLabel.snp.trailing).offset(10)
+            $0.top.equalToSuperview()
+            $0.trailing.bottom.equalToSuperview()
+        }
+        imageView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(80)
         }
         
-        collectionView.snp.makeConstraints {
+        infoView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.top.equalTo(collectionViewHeader.snp.bottom)
+            $0.top.equalTo(imageView.snp.bottom).offset(10)
         }
-    }
-    
-    private func setDelegate() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
-    }
-    
-    func prepare(items: [ContentModel]) {
-        self.items = items
     }
 }
 
-// MARK: - UICollectionViewDataSource
-
-extension PopularListCell: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as? PopularCollectionViewCell else { return UICollectionViewCell() }
-        cell.dataBind(item: items[indexPath.row])
-        return cell
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension PopularListCell: UICollectionViewDelegateFlowLayout {
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if !scrollView.isDragging {
-            let scrollOffset = scrollView.contentOffset.x
-            let rawIndex = scrollOffset / Metric.itemSize.width
-            let index: CGFloat
-            index = rawIndex - floor(rawIndex) > 0.7 ? CGFloat(Int(rawIndex + 1)) : CGFloat(Int(rawIndex))
-            let offset = (index * Metric.itemSize.width) + (index * Metric.itemMinimumSpacing)
-            targetContentOffset.pointee = CGPoint(x: offset, y: scrollView.contentInset.top)
-        }
+extension PopularListCell {
+    func dataBind(item: ContentModel) {
+        imageView.image = item.thumbnail
+        titleLabel.text = item.title
+        detailInfoLabel.text = item.description
+        latingLabel.text = "\(item.rating)%"
     }
 }

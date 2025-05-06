@@ -16,7 +16,7 @@ final class TvingCollectionHeaderView: UIView {
         $0.font = .font(.pretendardBold, ofSize: 15)
         $0.textColor = .white
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
