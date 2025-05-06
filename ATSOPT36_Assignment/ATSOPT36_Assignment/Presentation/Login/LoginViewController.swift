@@ -50,16 +50,16 @@ final class LoginViewController: BaseViewController {
         $0.titleLabel?.font = .font(.pretendardSemiBold, ofSize: 14)
     }
     
-    private lazy var idPasswordView = UIStackView().then {
-        $0.spacing = 33
+    private lazy var idPasswordView = UIStackView().then { stackView in
+        stackView.spacing = 33
         let lineView = UIView()
         lineView.translatesAutoresizingMaskIntoConstraints = false
         lineView.widthAnchor.constraint(equalToConstant: 1).isActive = true
         lineView.heightAnchor.constraint(equalToConstant: 12).isActive = true
         lineView.backgroundColor = .gray4
-        $0.addArrangedSubview(findIdButton)
-        $0.addArrangedSubview(lineView)
-        $0.addArrangedSubview(findPasswordButton)
+        [findIdButton, lineView, findPasswordButton].forEach {
+            stackView.addSubview($0)
+        }
     }
     
     private lazy var setNicknameButton = UIButton().then {
@@ -89,12 +89,9 @@ final class LoginViewController: BaseViewController {
     // MARK: - UI Setting
     
     override func addSubview() {
-        view.addSubview(loginLabel)
-        view.addSubview(idTextField)
-        view.addSubview(pwTextField)
-        view.addSubview(loginButton)
-        view.addSubview(idPasswordView)
-        view.addSubview(nicknameView)
+        [loginLabel, idTextField, pwTextField, loginButton, idPasswordView, nicknameView].forEach {
+            view.addSubview($0)
+        }
     }
     
     override func setLayout() {

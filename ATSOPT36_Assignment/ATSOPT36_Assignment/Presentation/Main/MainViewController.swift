@@ -50,13 +50,13 @@ final class MainViewController: BaseViewController {
         $0.addSubview(businessInfoLabel)
     }
     
-    private let accountInfoView = UIStackView().then {
-        $0.backgroundColor = .gray5
-        $0.layer.cornerRadius = 5
-        $0.isLayoutMarginsRelativeArrangement = true
-        $0.distribution = .fillProportionally
-        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
-        $0.spacing = 8
+    private let accountInfoView = UIStackView().then { stackView in
+        stackView.backgroundColor = .gray5
+        stackView.layer.cornerRadius = 5
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.distribution = .fillProportionally
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+        stackView.spacing = 8
         
         let notiLabel = UILabel()
         notiLabel.font = .font(.pretendardMedium, ofSize: 11)
@@ -70,10 +70,9 @@ final class MainViewController: BaseViewController {
         
         let moveButton = UIButton()
         moveButton.setImage(UIImage(resource: .moveButton), for: .normal)
-        
-        $0.addArrangedSubview(notiLabel)
-        $0.addArrangedSubview(accountLabel)
-        $0.addArrangedSubview(moveButton)
+        [notiLabel, accountLabel, moveButton].forEach {
+            stackView.addArrangedSubview($0)
+        }
     }
     
     private let termOfServiceLabel = UILabel().then {
@@ -107,8 +106,10 @@ final class MainViewController: BaseViewController {
         
         let rightStackView = UIStackView()
         rightStackView.spacing = 10
-        rightStackView.addArrangedSubview(searchImage)
-        rightStackView.addArrangedSubview(tvingCharacter)
+        
+        [searchImage, tvingCharacter].forEach {
+            rightStackView.addArrangedSubview($0)
+        }
         
         $0.addSubview(tvingLogo)
         $0.addSubview(rightStackView)

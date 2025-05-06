@@ -53,9 +53,9 @@ final class NicknameSheetViewController: UIViewController {
     }
     
     private func addSubViews() {
-        view.addSubview(nicknameInfoLabel)
-        view.addSubview(nicknameTextField)
-        view.addSubview(saveButton)
+        [nicknameInfoLabel, nicknameTextField, saveButton].forEach {
+            view.addSubview($0)
+        }        
     }
     
     private func setLayout() {

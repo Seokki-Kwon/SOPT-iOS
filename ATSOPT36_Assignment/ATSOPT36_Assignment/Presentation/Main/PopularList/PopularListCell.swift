@@ -42,12 +42,9 @@ final class PopularListCell: UICollectionViewCell {
         $0.textColor = .gray
     }
     
-    private lazy var infoDetailView = UIStackView().then {
-        $0.axis = .vertical
-        $0.distribution = .equalSpacing
-        $0.addArrangedSubview(titleLabel)
-        $0.addArrangedSubview(detailInfoLabel)
-        $0.addArrangedSubview(latingLabel)
+    private lazy var infoDetailView = UIStackView().then { stackView in
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
     }
     
     private let infoView = UIView()
@@ -62,7 +59,10 @@ final class PopularListCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func addSubView() {
+    private func addSubView() {        
+        [titleLabel, detailInfoLabel, latingLabel].forEach {
+            infoDetailView.addArrangedSubview($0)
+        }
         [rankLabel, infoDetailView].forEach {
             infoView.addSubview($0)
         }
