@@ -229,21 +229,22 @@ extension MainViewController {
 extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
         switch indexPath.row {
         case 0:
             return UITableView.automaticDimension
         case 1:
-            return TodayTvingList.Metric.itemSize.height + 60
+            return TodayTvingList.metric.itemSize.height + 60
         case 2:
-            return PopularList.Metric.itemSize.height + 60
+            return PopularList.metric.itemSize.height + 60
         case 3:
-            return PopularMovieList.Metric.itemSize.height + 60
+            return PopularMovieList.metric.itemSize.height + 60
         case 4:
             return UITableView.automaticDimension
         case 5:
-            return SportChannelList.Metric.itemSize.height
+            return SportChannelList.metric.itemSize.height
         case 6:
-            return KimGahyunBestList.Metric.itemSize.height + 60
+            return KimGahyunBestList.metric.itemSize.height + 60
         default:
             return 100
         }
