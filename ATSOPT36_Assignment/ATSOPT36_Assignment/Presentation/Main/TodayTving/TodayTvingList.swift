@@ -18,9 +18,7 @@ final class TodayTvingList: UITableViewCell {
     static var metric = Metric(itemSize: CGSize(width: 150, height: 146),
                                itemMinimumSpacing: 11.0,
                                itemMinimumInterSpacing: 11.0,
-                               sectionInset: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
-    
-    static let identifier = "TodayTvingList"
+                               sectionInset: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))        
     
     private let collectionViewHeader = TvingCollectionHeaderView().then {
         $0.configure(title: "오늘의 티빙 TOP 20")
@@ -37,7 +35,7 @@ final class TodayTvingList: UITableViewCell {
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout).then {
         $0.showsHorizontalScrollIndicator = false
-        $0.register(TodayTvingCell.self, forCellWithReuseIdentifier: TodayTvingCell.identifier)
+        $0.register(TodayTvingCell.self, forCellWithReuseIdentifier: TodayTvingCell.reuseIdentifier)
     }
     
     // MARK: - Initializer
@@ -88,7 +86,7 @@ extension TodayTvingList: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TodayTvingCell.identifier, for: indexPath) as? TodayTvingCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TodayTvingCell.reuseIdentifier, for: indexPath) as? TodayTvingCell else { return UICollectionViewCell() }
         cell.dataBind(index: indexPath.row, items[indexPath.row])
         return cell
     }

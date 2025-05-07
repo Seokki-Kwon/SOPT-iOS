@@ -17,8 +17,6 @@ final class PopularMovieList: UITableViewCell {
     // MARK: - Properties
     private var items: [ContentModel] = []
     
-    static let identifier = "PopularMovieList"
-    
     private let collectionViewHeader = TvingCollectionHeaderView().then {
         $0.configure(title: "실시간 인기 영화")
         $0.backgroundColor = .black
@@ -34,7 +32,7 @@ final class PopularMovieList: UITableViewCell {
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout).then {
         $0.showsHorizontalScrollIndicator = false
-        $0.register(PopularMovieCell.self, forCellWithReuseIdentifier: PopularMovieCell.identifier)
+        $0.register(PopularMovieCell.self, forCellWithReuseIdentifier: PopularMovieCell.reuseIdentifier)
     }
     
     // MARK: - Initializer
@@ -85,7 +83,7 @@ extension PopularMovieList: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularMovieCell.identifier, for: indexPath) as? PopularMovieCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularMovieCell.reuseIdentifier, for: indexPath) as? PopularMovieCell else { return UICollectionViewCell() }
         cell.dataBind(item: items[indexPath.row])
         return cell
     }

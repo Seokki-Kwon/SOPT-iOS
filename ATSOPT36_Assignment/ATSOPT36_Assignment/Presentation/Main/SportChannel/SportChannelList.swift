@@ -17,9 +17,7 @@ final class SportChannelList: UITableViewCell {
     
     // MARK: - Properties
     
-    private var items: [ContentModel] = []
-    
-    static let identifier = "SportChannelList"
+    private var items: [ContentModel] = []        
     
     private lazy var collectionViewLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -31,7 +29,7 @@ final class SportChannelList: UITableViewCell {
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout).then {
         $0.showsHorizontalScrollIndicator = false
-        $0.register(SportChannelCell.self, forCellWithReuseIdentifier: SportChannelCell.identifier)
+        $0.register(SportChannelCell.self, forCellWithReuseIdentifier: SportChannelCell.reuseIdentifier)
     }
     
     // MARK: - Initializer
@@ -48,10 +46,8 @@ final class SportChannelList: UITableViewCell {
     
     // MARK: - UI Setting
     
-    private func setUI() {
-        [collectionView].forEach {
-            contentView.addSubview($0)
-        }
+    private func setUI() {        
+        contentView.addSubview(collectionView)
         
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -76,7 +72,7 @@ extension SportChannelList: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SportChannelCell.identifier, for: indexPath) as? SportChannelCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SportChannelCell.reuseIdentifier, for: indexPath) as? SportChannelCell else { return UICollectionViewCell() }
         cell.dataBind(item: items[indexPath.row])
         return cell
     }

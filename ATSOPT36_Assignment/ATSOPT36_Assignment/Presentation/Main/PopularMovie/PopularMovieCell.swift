@@ -9,9 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class PopularMovieCell: UICollectionViewCell {
-    
-    static let identifier = "PopularMovieCell"
+final class PopularMovieCell: UICollectionViewCell {        
     
     private let imageView = UIImageView().then {
         $0.layer.cornerRadius = 3

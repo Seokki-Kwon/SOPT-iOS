@@ -15,9 +15,7 @@ final class KimGahyunBestList: UITableViewCell {
                                sectionInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0))
     
     // MARK: - Properties
-    private var items: [ContentModel] = []
-    
-    static let identifier = "KimGahyunBestList"
+    private var items: [ContentModel] = []        
     
     private let collectionViewHeader = TvingCollectionHeaderView().then {
         $0.configure(title: "김가현PD의 인생작 TOP 5")
@@ -34,7 +32,7 @@ final class KimGahyunBestList: UITableViewCell {
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout).then {
         $0.showsHorizontalScrollIndicator = false
-        $0.register(KimGahyunBestListCell.self, forCellWithReuseIdentifier: KimGahyunBestListCell.identifier)
+        $0.register(KimGahyunBestListCell.self, forCellWithReuseIdentifier: KimGahyunBestListCell.reuseIdentifier)
     }
     
     // MARK: - Initializer
@@ -85,7 +83,7 @@ extension KimGahyunBestList: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KimGahyunBestListCell.identifier, for: indexPath) as? KimGahyunBestListCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KimGahyunBestListCell.reuseIdentifier, for: indexPath) as? KimGahyunBestListCell else { return UICollectionViewCell() }
         cell.dataBind(item: items[indexPath.row])
         return cell
     }

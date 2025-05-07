@@ -11,8 +11,6 @@ import SnapKit
 
 final class KimGahyunBestListCell: UICollectionViewCell {
     
-    static let identifier = "KimGahyunBestListCell"
-    
     private let imageView = UIImageView().then {
         $0.layer.cornerRadius = 3
         $0.clipsToBounds = true

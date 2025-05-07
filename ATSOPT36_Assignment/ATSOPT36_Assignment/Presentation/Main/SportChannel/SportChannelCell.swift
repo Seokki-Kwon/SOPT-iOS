@@ -9,9 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class SportChannelCell: UICollectionViewCell {
-    
-    static let identifier = "SportChannelCell"
+final class SportChannelCell: UICollectionViewCell {        
     
     private let imageView = UIImageView().then {
         $0.clipsToBounds = true

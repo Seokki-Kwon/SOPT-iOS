@@ -15,8 +15,7 @@ final class PopularList: UITableViewCell {
                                sectionInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0))
     
     // MARK: - Properties
-    private var items: [ContentModel] = []
-    static let identifier = "PopularList"
+    private var items: [ContentModel] = []    
     
     private let collectionViewHeader = TvingCollectionHeaderView().then {
         $0.configure(title: "실시간 인기 LIVE")
@@ -33,7 +32,7 @@ final class PopularList: UITableViewCell {
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout).then {
         $0.showsHorizontalScrollIndicator = false
-        $0.register(PopularListCell.self, forCellWithReuseIdentifier: PopularListCell.identifier)
+        $0.register(PopularListCell.self, forCellWithReuseIdentifier: PopularListCell.reuseIdentifier)
     }
     
     // MARK: - Initializer
@@ -84,7 +83,7 @@ extension PopularList: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularListCell.identifier, for: indexPath) as? PopularListCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularListCell.reuseIdentifier, for: indexPath) as? PopularListCell else { return UICollectionViewCell() }
         cell.dataBind(item: items[indexPath.row])
         return cell
     }

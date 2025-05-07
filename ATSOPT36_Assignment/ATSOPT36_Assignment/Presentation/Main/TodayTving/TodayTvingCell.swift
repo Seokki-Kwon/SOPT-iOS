@@ -9,9 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class TodayTvingCell: UICollectionViewCell {
-    
-    static let identifier = "TodayTvingCell"
+final class TodayTvingCell: UICollectionViewCell {        
     
     private let imageView = UIImageView().then {
         $0.layer.cornerRadius = 3

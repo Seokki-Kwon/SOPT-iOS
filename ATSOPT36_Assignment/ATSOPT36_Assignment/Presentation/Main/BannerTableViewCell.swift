@@ -9,9 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class BannerTableViewCell: UITableViewCell {
-    
-    static let identifier = "BannerTableViewCell"
+final class BannerTableViewCell: UITableViewCell {        
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -24,14 +24,14 @@ final class MainViewController: BaseViewController {
         $0.contentInset.top = tableViewHeight
         $0.showsVerticalScrollIndicator = false
         
-        $0.register(ListTableViewCell.self, forCellReuseIdentifier: ListTableViewCell.identifier)
-        $0.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.identifier)
-        $0.register(TodayTvingList.self, forCellReuseIdentifier: TodayTvingList.identifier)
-        $0.register(PopularList.self, forCellReuseIdentifier: PopularList.identifier)
-        $0.register(PopularMovieList.self, forCellReuseIdentifier: PopularMovieList.identifier)
-        $0.register(BannerTableViewCell.self, forCellReuseIdentifier: BannerTableViewCell.identifier)
-        $0.register(SportChannelList.self, forCellReuseIdentifier: SportChannelList.identifier)
-        $0.register(KimGahyunBestList.self, forCellReuseIdentifier: KimGahyunBestList.identifier)
+        $0.register(ListTableViewCell.self, forCellReuseIdentifier: ListTableViewCell.reuseIdentifier)
+        $0.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.reuseIdentifier)
+        $0.register(TodayTvingList.self, forCellReuseIdentifier: TodayTvingList.reuseIdentifier)
+        $0.register(PopularList.self, forCellReuseIdentifier: PopularList.reuseIdentifier)
+        $0.register(PopularMovieList.self, forCellReuseIdentifier: PopularMovieList.reuseIdentifier)
+        $0.register(BannerTableViewCell.self, forCellReuseIdentifier: BannerTableViewCell.reuseIdentifier)
+        $0.register(SportChannelList.self, forCellReuseIdentifier: SportChannelList.reuseIdentifier)
+        $0.register(KimGahyunBestList.self, forCellReuseIdentifier: KimGahyunBestList.reuseIdentifier)
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
@@ -246,7 +246,7 @@ extension MainViewController: UITableViewDelegate {
         case 6:
             return KimGahyunBestList.metric.itemSize.height + 60
         default:
-            return 100
+            return 0
         }
     }
     
@@ -279,29 +279,29 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch mockData[indexPath.row] {
         case .thumbnail:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageTableViewCell.identifier, for: indexPath) as? ImageTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageTableViewCell.reuseIdentifier, for: indexPath) as? ImageTableViewCell else { return UITableViewCell() }
             return cell
         case let .todayTving(items):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: TodayTvingList.identifier, for: indexPath) as? TodayTvingList else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TodayTvingList.reuseIdentifier, for: indexPath) as? TodayTvingList else { return UITableViewCell() }
             cell.prepare(items: items)
             return cell
         case let .popularLive(items):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularList.identifier, for: indexPath) as? PopularList else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularList.reuseIdentifier, for: indexPath) as? PopularList else { return UITableViewCell() }
             cell.prepare(items: items)
             return cell
         case let .popularMovie(items):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularMovieList.identifier, for: indexPath) as? PopularMovieList else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularMovieList.reuseIdentifier, for: indexPath) as? PopularMovieList else { return UITableViewCell() }
             cell.prepare(items: items)
             return cell
         case .banner:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: BannerTableViewCell.identifier, for: indexPath) as? BannerTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: BannerTableViewCell.reuseIdentifier, for: indexPath) as? BannerTableViewCell else { return UITableViewCell() }
             return cell
         case let .sport(items):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SportChannelList.identifier, for: indexPath) as? SportChannelList else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SportChannelList.reuseIdentifier, for: indexPath) as? SportChannelList else { return UITableViewCell() }
             cell.prepare(items: items)
             return cell
         case let .kimGahyunBest(items):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: KimGahyunBestList.identifier, for: indexPath) as? KimGahyunBestList else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: KimGahyunBestList.reuseIdentifier, for: indexPath) as? KimGahyunBestList else { return UITableViewCell() }
             cell.prepare(items: items)
             return cell
         }

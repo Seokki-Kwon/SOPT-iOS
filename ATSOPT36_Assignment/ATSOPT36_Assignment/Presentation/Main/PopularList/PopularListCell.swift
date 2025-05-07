@@ -9,9 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class PopularListCell: UICollectionViewCell {
-    
-    static let identifier = "PopularListCell"
+final class PopularListCell: UICollectionViewCell {        
     
     private let imageView = UIImageView().then {
         $0.layer.cornerRadius = 3
