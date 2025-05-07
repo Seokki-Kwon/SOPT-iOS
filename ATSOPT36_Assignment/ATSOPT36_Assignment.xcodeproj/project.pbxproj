@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4747F1FB2DB3CB3100B65239 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 4747F1FA2DB3CB3100B65239 /* Then */; };
 		4747F2032DB3CCA600B65239 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4747F2022DB3CCA600B65239 /* SnapKit */; };
-		47E677B92DCBAA7900E3B8E5 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 47E677B82DCBAA7900E3B8E5 /* Secrets.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,11 +51,6 @@
 			path = ATSOPT36_AssignmentTests;
 			sourceTree = "<group>";
 		};
-		47E6781B2DCBACF500E3B8E5 /* Utils */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Utils;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				475FC9722DAFE00C000045E9 /* ATSOPT36_Assignment */,
-				47E6781B2DCBACF500E3B8E5 /* Utils */,
-				47E677B82DCBAA7900E3B8E5 /* Secrets.xcconfig */,
 				47662D542DC7690B000803B5 /* ATSOPT36_AssignmentTests */,
 				475FC9712DAFE00C000045E9 /* Products */,
 			);
@@ -116,7 +108,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				475FC9722DAFE00C000045E9 /* ATSOPT36_Assignment */,
-				47E6781B2DCBACF500E3B8E5 /* Utils */,
 			);
 			name = ATSOPT36_Assignment;
 			packageProductDependencies = (
@@ -198,7 +189,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47E677B92DCBAA7900E3B8E5 /* Secrets.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

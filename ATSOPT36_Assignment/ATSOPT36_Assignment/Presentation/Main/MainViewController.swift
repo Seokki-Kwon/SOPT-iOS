@@ -218,6 +218,14 @@ extension MainViewController {
 
 extension MainViewController {
     @objc private func handleRefreshControl() {
+        Task {
+            do {
+                let response: MovieListResponse = try await NetworkService.shared.request(MovieListAPI.fetchMovieList)
+                print(response)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
         DispatchQueue.main.async {
             self.tableView.refreshControl?.endRefreshing()
         }
