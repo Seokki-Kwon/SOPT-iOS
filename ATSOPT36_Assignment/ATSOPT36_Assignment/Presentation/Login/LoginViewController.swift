@@ -53,9 +53,10 @@ final class LoginViewController: BaseViewController {
     private lazy var idPasswordView = UIStackView().then { stackView in
         stackView.spacing = 33
         let lineView = UIView()
-        lineView.translatesAutoresizingMaskIntoConstraints = false
-        lineView.widthAnchor.constraint(equalToConstant: 1).isActive = true
-        lineView.heightAnchor.constraint(equalToConstant: 12).isActive = true
+        lineView.snp.makeConstraints {
+            $0.width.equalTo(1)
+            $0.height.equalTo(12)
+        }        
         lineView.backgroundColor = .gray4
         [findIdButton, lineView, findPasswordButton].forEach {
             stackView.addSubview($0)
