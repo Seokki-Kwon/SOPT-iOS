@@ -9,9 +9,11 @@ import UIKit
 import SnapKit
 import Then
 
-final class LoginViewController: UIViewController {
+final class LoginViewController: BaseViewController {
     
     // MARK: - Properties
+    
+    weak var delegate: LoginViewControllerDelegate?
     
     private var nickname: String?
     
@@ -48,17 +50,17 @@ final class LoginViewController: UIViewController {
         $0.titleLabel?.font = .font(.pretendardSemiBold, ofSize: 14)
     }
     
-    private lazy var idPasswordView = UIStackView().then {
-        $0.spacing = 33
+    private lazy var idPasswordView = UIStackView().then { stackView in
+        stackView.spacing = 33
         let lineView = UIView()
         lineView.snp.makeConstraints {
             $0.width.equalTo(1)
             $0.height.equalTo(12)
         }        
         lineView.backgroundColor = .gray4
-        $0.addArrangedSubview(findIdButton)
-        $0.addArrangedSubview(lineView)
-        $0.addArrangedSubview(findPasswordButton)
+        [findIdButton, lineView, findPasswordButton].forEach {
+            stackView.addSubview($0)
+        }
     }
     
     private lazy var setNicknameButton = UIButton().then {
@@ -81,29 +83,19 @@ final class LoginViewController: UIViewController {
     
     // MARK: - LifeCycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .black
-        addSubViews()
-        setLayout()
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-}
-
-// MARK: - UI Setting
-
-extension LoginViewController {
+ 
+    // MARK: - UI Setting
     
-    private func addSubViews() {
+    override func addSubview() {
         [loginLabel, idTextField, pwTextField, loginButton, idPasswordView, nicknameView].forEach {
             view.addSubview($0)
         }
     }
     
-    private func setLayout() {
+    override func setLayout() {
         
         loginLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -137,11 +129,6 @@ extension LoginViewController {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(idPasswordView.snp.bottom).offset(28)
         }
-    }
-    
-    private func clearTextField() {
-        idTextField.text = ""
-        pwTextField.text = ""
     }
 }
 
@@ -191,15 +178,18 @@ extension LoginViewController {
             pwTextField.resignFirstResponder()
         }
     }
+    
+    private func clearTextField() {
+        idTextField.text = ""
+        pwTextField.text = ""
+    }
 }
 
-// MARK: - LoginDataDelegate
+// MARK: - WelcomeViewControllerDelegate
 
-extension LoginViewController: LoginDataDelegate {
-    func dataBind(id: String) {
-        print("\(id) 로그아웃")
-        clearTextField()
-        loginButton.isEnabled = false
+extension LoginViewController: WelcomeViewControllerDelegate {
+    func welcomeFlowDidComplete() {
+        delegate?.loginFlowDidComplete()
     }
 }
 

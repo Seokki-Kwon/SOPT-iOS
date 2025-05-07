@@ -11,8 +11,19 @@
 		4747F2032DB3CCA600B65239 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4747F2022DB3CCA600B65239 /* SnapKit */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		47662D572DC7690B000803B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 475FC9682DAFE00C000045E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 475FC96F2DAFE00C000045E9;
+			remoteInfo = ATSOPT36_Assignment;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		475FC9702DAFE00C000045E9 /* ATSOPT36_Assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATSOPT36_Assignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		47662D532DC7690B000803B5 /* ATSOPT36_AssignmentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATSOPT36_AssignmentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -34,6 +45,11 @@
 			path = ATSOPT36_Assignment;
 			sourceTree = "<group>";
 		};
+		47662D542DC7690B000803B5 /* ATSOPT36_AssignmentTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ATSOPT36_AssignmentTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +62,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		47662D502DC7690B000803B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -53,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				475FC9722DAFE00C000045E9 /* ATSOPT36_Assignment */,
+				47662D542DC7690B000803B5 /* ATSOPT36_AssignmentTests */,
 				475FC9712DAFE00C000045E9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				475FC9702DAFE00C000045E9 /* ATSOPT36_Assignment.app */,
+				47662D532DC7690B000803B5 /* ATSOPT36_AssignmentTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,6 +117,29 @@
 			productReference = 475FC9702DAFE00C000045E9 /* ATSOPT36_Assignment.app */;
 			productType = "com.apple.product-type.application";
 		};
+		47662D522DC7690B000803B5 /* ATSOPT36_AssignmentTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47662D5B2DC7690B000803B5 /* Build configuration list for PBXNativeTarget "ATSOPT36_AssignmentTests" */;
+			buildPhases = (
+				47662D4F2DC7690B000803B5 /* Sources */,
+				47662D502DC7690B000803B5 /* Frameworks */,
+				47662D512DC7690B000803B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47662D582DC7690B000803B5 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				47662D542DC7690B000803B5 /* ATSOPT36_AssignmentTests */,
+			);
+			name = ATSOPT36_AssignmentTests;
+			packageProductDependencies = (
+			);
+			productName = ATSOPT36_AssignmentTests;
+			productReference = 47662D532DC7690B000803B5 /* ATSOPT36_AssignmentTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -104,6 +152,10 @@
 				TargetAttributes = {
 					475FC96F2DAFE00C000045E9 = {
 						CreatedOnToolsVersion = 16.2;
+					};
+					47662D522DC7690B000803B5 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 475FC96F2DAFE00C000045E9;
 					};
 				};
 			};
@@ -126,12 +178,20 @@
 			projectRoot = "";
 			targets = (
 				475FC96F2DAFE00C000045E9 /* ATSOPT36_Assignment */,
+				47662D522DC7690B000803B5 /* ATSOPT36_AssignmentTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		475FC96E2DAFE00C000045E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47662D512DC7690B000803B5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -148,7 +208,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		47662D4F2DC7690B000803B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		47662D582DC7690B000803B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 475FC96F2DAFE00C000045E9 /* ATSOPT36_Assignment */;
+			targetProxy = 47662D572DC7690B000803B5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		475FC9842DAFE00E000045E9 /* Debug */ = {
@@ -326,6 +401,52 @@
 			};
 			name = Release;
 		};
+		47662D592DC7690B000803B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X58MVPBY9R;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Seokki.ATSOPT36-AssignmentTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ATSOPT36_Assignment.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ATSOPT36_Assignment";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		47662D5A2DC7690B000803B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X58MVPBY9R;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Seokki.ATSOPT36-AssignmentTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ATSOPT36_Assignment.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ATSOPT36_Assignment";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -343,6 +464,15 @@
 			buildConfigurations = (
 				475FC9842DAFE00E000045E9 /* Debug */,
 				475FC9852DAFE00E000045E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47662D5B2DC7690B000803B5 /* Build configuration list for PBXNativeTarget "ATSOPT36_AssignmentTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47662D592DC7690B000803B5 /* Debug */,
+				47662D5A2DC7690B000803B5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

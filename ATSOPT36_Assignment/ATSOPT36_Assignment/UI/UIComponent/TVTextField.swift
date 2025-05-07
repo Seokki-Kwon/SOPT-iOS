@@ -70,8 +70,9 @@ final class TVTextField: UITextField {
         case .default:
             rightStackView.addArrangedSubview(deleteButton)
         case .password:
-            rightStackView.addArrangedSubview(deleteButton)
-            rightStackView.addArrangedSubview(togglePasswordButton)
+            [deleteButton, togglePasswordButton].forEach {
+                rightStackView.addArrangedSubview($0)
+            }
             isSecureTextEntry = true
         }
         rightViewMode = .always
