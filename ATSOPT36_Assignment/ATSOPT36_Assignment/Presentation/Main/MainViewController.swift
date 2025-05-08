@@ -233,6 +233,7 @@ extension MainViewController {
     
     @objc func searchButtonTapped() {
         let searchViewController = SearchViewController()
+        
         navigationController?.pushViewController(searchViewController, animated: false)
     }
     
