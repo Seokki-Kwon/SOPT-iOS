@@ -9,9 +9,12 @@ import UIKit
 
 import SnapKit
 
-final class SearchViewController: BaseViewController {
+final class SearchViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
     
-    private let tableView = UITableView()
+    private let tableView = UITableView().then {
+        
+        $0.register(SearchResultCell.self, forCellReuseIdentifier: SearchResultCell.reuseIdentifier)
+    }
     
     private let cancelButton = UIButton().then {
         let image = UIImage(systemName: "xmark")?.withRenderingMode(.alwaysTemplate)
@@ -59,8 +62,22 @@ final class SearchViewController: BaseViewController {
         
         tableView.snp.makeConstraints {
             $0.horizontalEdges.bottom.equalToSuperview()
-            $0.top.equalTo(searchBar.snp.bottom)
+            $0.top.equalTo(searchBar.snp.bottom).offset(10)
         }
+    }
+    
+    override func setDelegate() {
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultCell.reuseIdentifier, for: indexPath) as? SearchResultCell else { return UITableViewCell() }
+        return cell
     }
 }
 
