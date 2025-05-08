@@ -34,4 +34,8 @@ final class SearchResultCell: UITableViewCell {
         }
     }
     
+    func prepare(text: String) {
+        self.searchLabel.text = text
+    }
+    
 }

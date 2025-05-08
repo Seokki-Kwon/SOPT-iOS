@@ -9,12 +9,16 @@ import UIKit
 
 import SnapKit
 
-final class SearchViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
+final class SearchViewController: BaseViewController {
+    
+    // MARK: - Properties
     
     private let tableView = UITableView().then {
-        
+        $0.separatorStyle = .none
         $0.register(SearchResultCell.self, forCellReuseIdentifier: SearchResultCell.reuseIdentifier)
     }
+    
+    private var result: [Movie] = []
     
     private let cancelButton = UIButton().then {
         let image = UIImage(systemName: "xmark")?.withRenderingMode(.alwaysTemplate)
@@ -25,28 +29,33 @@ final class SearchViewController: BaseViewController, UITableViewDataSource, UIT
         $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7)
     }
     
-    private let searchTextField = UITextField().then {
+    private lazy var searchTextField = UITextField().then {
         $0.backgroundColor = .gray4
         $0.setContentHuggingPriority(.defaultLow, for: .horizontal)
         $0.layer.cornerRadius = 20
         $0.setPlaceholder("제목, 인물명을 입력해보세요.", .gray2)
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: 10))
         $0.leftViewMode = .always
+        $0.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     private lazy var searchBar = UIStackView().then { stackView in
         stackView.distribution = .fill
         stackView.spacing = 7
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 16)
         [cancelButton, searchTextField].forEach {
             stackView.addArrangedSubview($0)
         }
     }
     
+    // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    // MARK: - UI Setting
     
     override func addSubview() {
         [searchBar, tableView].forEach {
@@ -70,13 +79,35 @@ final class SearchViewController: BaseViewController, UITableViewDataSource, UIT
         tableView.dataSource = self
         tableView.delegate = self
     }
-    
+}
+
+// MARK: - UI Action
+
+extension SearchViewController {
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        Task {
+            do {
+                let response: MovieListResponse = try await NetworkService.shared.request(MovieListAPI.fetchMovieList(term: text))
+                result = response.movieListResult.movieList
+                tableView.reloadData()
+            } catch {
+                print(error)
+            }
+        }
+    }
+}
+
+// MARK: - UITableViewDataSource, UITableViewDelegate
+
+extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return result.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultCell.reuseIdentifier, for: indexPath) as? SearchResultCell else { return UITableViewCell() }
+        cell.prepare(text: result[indexPath.row].movieNm)
         return cell
     }
 }

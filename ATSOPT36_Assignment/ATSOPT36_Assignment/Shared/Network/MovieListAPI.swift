@@ -8,7 +8,7 @@
 import Foundation
 
 enum MovieListAPI: API {
-    case fetchMovieList
+    case fetchMovieList(term: String)
 }
 
 extension MovieListAPI {
@@ -46,8 +46,9 @@ extension MovieListAPI {
     
     var query: [URLQueryItem] {
         switch self {
-        case .fetchMovieList:
-            return [URLQueryItem(name: "key", value: Secret.apiKey)]
+        case let .fetchMovieList(term):
+            return [URLQueryItem(name: "key", value: Secret.apiKey),
+                    URLQueryItem(name: "movieNm", value: term)]
         }
     }
 }
