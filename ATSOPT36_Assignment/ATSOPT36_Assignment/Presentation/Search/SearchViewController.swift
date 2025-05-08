@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 import SnapKit
 
@@ -13,12 +14,15 @@ final class SearchViewController: BaseViewController {
     
     // MARK: - Properties
     
+    private var result: [Movie] = []
+    private var bag = Set<AnyCancellable>()
+    
+    private let textSubject = CurrentValueSubject<String?, Never>("")
+    
     private let tableView = UITableView().then {
         $0.separatorStyle = .none
         $0.register(SearchResultCell.self, forCellReuseIdentifier: SearchResultCell.reuseIdentifier)
     }
-    
-    private var result: [Movie] = []
     
     private let cancelButton = UIButton().then {
         let image = UIImage(systemName: "xmark")?.withRenderingMode(.alwaysTemplate)
@@ -27,6 +31,7 @@ final class SearchViewController: BaseViewController {
         $0.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7)
+        $0.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
     }
     
     private lazy var searchTextField = UITextField().then {
@@ -53,6 +58,7 @@ final class SearchViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
     }
     
     // MARK: - UI Setting
@@ -81,14 +87,42 @@ final class SearchViewController: BaseViewController {
     }
 }
 
+// MARK: - Binding
+
+extension SearchViewController {
+    private func bind() {
+        textSubject
+            .debounce(for: 0.5, scheduler: RunLoop.main)
+            .replaceNil(with: "")
+            .filter { !$0.isEmpty }
+            .sink(receiveValue: { [weak self] in
+                guard let self = self else { return }
+                performSarch($0)
+            })
+            .store(in: &bag)
+    }
+}
+
 // MARK: - UI Action
 
 extension SearchViewController {
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        guard let text = textField.text else { return }
+        textSubject.send(textField.text)
+    }
+    
+    @objc private func cancelButtonTapped() {
+        navigationController?.popViewController(animated: false)
+    }
+}
+
+// MARK: - Netowrk Request
+
+extension SearchViewController {
+    private func performSarch(_ term: String) {
+        guard !term.isEmpty else { return }
         Task {
             do {
-                let response: MovieListResponse = try await NetworkService.shared.request(MovieListAPI.fetchMovieList(term: text))
+                let response: MovieListResponse = try await NetworkService.shared.request(MovieListAPI.fetchMovieList(term: term))
                 result = response.movieListResult.movieList
                 tableView.reloadData()
             } catch {
