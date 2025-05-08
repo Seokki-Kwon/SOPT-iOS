@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		472D2DAE2DCC3B86006DEFD7 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 472D2DA12DCC3B86006DEFD7 /* Secrets.xcconfig */; };
 		4747F1FB2DB3CB3100B65239 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 4747F1FA2DB3CB3100B65239 /* Then */; };
 		4747F2032DB3CCA600B65239 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4747F2022DB3CCA600B65239 /* SnapKit */; };
 /* End PBXBuildFile section */
@@ -22,6 +23,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		472D2DA12DCC3B86006DEFD7 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		475FC9702DAFE00C000045E9 /* ATSOPT36_Assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATSOPT36_Assignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47662D532DC7690B000803B5 /* ATSOPT36_AssignmentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATSOPT36_AssignmentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		47E677B82DCBAA7900E3B8E5 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
@@ -73,12 +75,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		472D2D542DCC3B86006DEFD7 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				47E677B82DCBAA7900E3B8E5 /* Secrets.xcconfig */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		475FC9672DAFE00C000045E9 = {
 			isa = PBXGroup;
 			children = (
 				475FC9722DAFE00C000045E9 /* ATSOPT36_Assignment */,
 				47662D542DC7690B000803B5 /* ATSOPT36_AssignmentTests */,
 				475FC9712DAFE00C000045E9 /* Products */,
+				472D2D542DCC3B86006DEFD7 /* Recovered References */,
+				472D2DA12DCC3B86006DEFD7 /* Secrets.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -189,6 +201,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				472D2DAE2DCC3B86006DEFD7 /* Secrets.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

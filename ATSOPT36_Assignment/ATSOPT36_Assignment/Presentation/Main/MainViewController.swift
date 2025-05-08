@@ -95,19 +95,27 @@ final class MainViewController: BaseViewController {
         $0.backgroundColor = .black
     }
     
-    private let headerTopView = UIView().then {
+    private lazy var searchButton = UIButton().then {
+        let searchImage = UIImage(resource: .search)
+        $0.setImage(searchImage, for: .normal)
+        $0.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+    }
+    
+    private lazy var characterButton = UIButton().then {
+        let tvingCharacter = UIImage(resource: .tvingLogo2)
+        $0.setImage(tvingCharacter, for: .normal)
+        $0.addTarget(self, action: #selector(characterButtonTapped), for: .touchUpInside)
+    }
+    
+    private lazy var headerTopView = UIView().then {
         let tvingLogo = UIImageView(image: UIImage(resource: .tvingLogo))
-        let tvingCharacter = UIImageView(image: UIImage(resource: .tvingLogo2))
-        let searchImage = UIImageView(image: UIImage(resource: .search))
         
         tvingLogo.contentMode = .left
-        tvingCharacter.contentMode = .center
-        searchImage.contentMode = .center
         
         let rightStackView = UIStackView()
         rightStackView.spacing = 10
         
-        [searchImage, tvingCharacter].forEach {
+        [searchButton, characterButton].forEach {
             rightStackView.addArrangedSubview($0)
         }
         
@@ -218,17 +226,18 @@ extension MainViewController {
 
 extension MainViewController {
     @objc private func handleRefreshControl() {
-        Task {
-            do {
-                let response: MovieListResponse = try await NetworkService.shared.request(MovieListAPI.fetchMovieList)
-                print(response)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
         DispatchQueue.main.async {
             self.tableView.refreshControl?.endRefreshing()
         }
+    }
+    
+    @objc func searchButtonTapped() {
+        let searchViewController = SearchViewController()
+        navigationController?.pushViewController(searchViewController, animated: false)
+    }
+    
+    @objc func characterButtonTapped() {
+        
     }
 }
 
